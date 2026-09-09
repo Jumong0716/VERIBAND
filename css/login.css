@@ -1,42 +1,138 @@
 /* ==========================================================================
    VeriBand — Login Screen
+   Split layout: brand rail (mission + monitoring motif) and the sign-in form.
    Styles scoped to index.html (the login page) only.
    Depends on: variables.css, base.css
    ========================================================================== */
 
 body.login-body{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:
-    radial-gradient(circle at 85% 90%, rgba(105,152,152,.14) 0%, transparent 45%),
-    radial-gradient(circle at 15% 10%, var(--brand-light) 0%, var(--bg) 45%),
-    var(--bg);
-  padding:20px;
+  min-height:100vh;
+  background:var(--bg);
 }
 
-.login-card{
-  width:100%;max-width:400px;background:#fff;border-radius:var(--radius-lg);
-  box-shadow:0 20px 60px rgba(15,60,40,.12);padding:38px 34px 30px;border:1px solid var(--line);
+.login-shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
 }
 
-.login-logo{display:flex;align-items:center;gap:11px;margin-bottom:6px;}
-.login-logo .mark{
-  width:42px;height:42px;border-radius:12px;background:linear-gradient(155deg,var(--brand),var(--brand-darker));
-  display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;
+/* ---------- left: brand rail ---------- */
+.login-brand{
+  position:relative;
+  background:linear-gradient(175deg, var(--brand) 0%, var(--brand-darker) 100%);
+  color:#fff;
+  padding:48px 52px 44px;
+  display:flex;
+  flex-direction:column;
 }
-.login-logo .word{font-size:21px;font-weight:800;letter-spacing:-.01em;}
+.login-brand-top{display:flex;align-items:center;gap:11px;}
+.login-brand-top .mark{
+  width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.login-brand-top .word{font-family:'Plus Jakarta Sans';font-size:17px;font-weight:700;letter-spacing:-.005em;}
 
-.login-tag{font-size:12.5px;color:var(--muted);margin:0 0 26px;}
-.login-foot{text-align:center;margin-top:22px;font-size:12px;color:var(--muted);font-weight:600;}
+/* monitoring-line motif — the one considered accent on the page */
+.pulse-art{margin:40px 0 36px;}
+.pulse-art svg{width:100%;height:auto;display:block;}
+.pulse-base{fill:none;stroke:rgba(255,255,255,.16);stroke-width:1.4;}
+.pulse-line{
+  fill:none;stroke:var(--teal);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:54 900;
+  animation:pulseSweep 4.2s linear infinite;
+}
+@keyframes pulseSweep{ to{ stroke-dashoffset:-954; } }
+@media (prefers-reduced-motion:reduce){
+  .pulse-line{ animation:none; stroke-dasharray:none; }
+}
+
+.login-headline{
+  font-family:'Plus Jakarta Sans';
+  font-size:clamp(24px,2.6vw,29px);
+  font-weight:700;
+  line-height:1.22;
+  letter-spacing:-.005em;
+  margin:0 0 12px;
+  max-width:16ch;
+}
+.login-mission{
+  font-size:13.5px;
+  line-height:1.65;
+  color:rgba(255,255,255,.72);
+  margin:0 0 30px;
+  max-width:38ch;
+}
+
+.login-points{list-style:none;margin:0 0 auto;padding:0;display:flex;flex-direction:column;gap:0;}
+.login-points li{
+  display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;
+  color:rgba(255,255,255,.85);padding:11px 0;border-top:1px solid rgba(255,255,255,.12);
+}
+.login-points li:last-child{border-bottom:1px solid rgba(255,255,255,.12);}
+.login-points .pt-ic{color:var(--teal);flex-shrink:0;display:flex;}
+.login-points .pt-ic svg{width:15px;height:15px;}
+
+.login-brand-foot{
+  margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);
+  font-size:11.5px;color:rgba(255,255,255,.55);font-weight:600;
+}
+
+/* ---------- right: form ---------- */
+.login-formwrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 32px;
+}
+.login-card{width:100%;max-width:372px;}
+
+.login-card-head{margin-bottom:28px;}
+.login-card-head h2{font-family:'Plus Jakarta Sans';font-size:20px;font-weight:700;margin:0 0 4px;letter-spacing:-.005em;}
+.login-card-head p{font-size:12.5px;color:var(--muted);margin:0;}
+
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.role-opt{
+  display:flex;align-items:center;gap:9px;
+  border:1.4px solid var(--line);border-radius:9px;padding:10px 10px;text-align:left;
+  font-size:12px;font-weight:700;color:var(--ink-soft);background:#fff;
+  transition:border-color .15s ease, background .15s ease;
+}
+.role-opt .ro-ic{
+  width:26px;height:26px;border-radius:7px;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;
+  transition:.15s ease;
+}
+.role-opt .ro-ic svg{width:14px;height:14px;}
+.role-opt:hover{border-color:#c9d5cf;}
+.role-opt.active{border-color:var(--brand);background:var(--brand-light);color:var(--brand-darker);}
+.role-opt.active .ro-ic{background:var(--brand);color:#fff;}
+
+.login-security-note{
+  display:flex;align-items:center;gap:7px;margin-top:14px;font-size:11.5px;color:var(--muted);font-weight:600;
+}
+.login-security-note svg{width:13px;height:13px;color:var(--muted);flex-shrink:0;}
 
 .login-demo-note{
-  margin-top:16px;background:var(--accent-light);border:1px dashed rgba(105,152,152,.55);border-radius:10px;
-  padding:10px 12px;font-size:11.8px;color:var(--brand-darker);line-height:1.5;
+  margin-top:18px;background:var(--accent-light);border-left:2.5px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:10px 12px;font-size:11.5px;color:var(--brand-darker);line-height:1.55;
 }
+.login-foot{text-align:center;margin-top:24px;font-size:11.5px;color:var(--muted);font-weight:600;}
 
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-.role-opt{
-  border:1.5px solid var(--line);border-radius:10px;padding:10px 8px;text-align:center;font-size:12px;font-weight:700;
-  color:var(--ink-soft);background:#fbfdfc;
+/* ---------- responsive ---------- */
+@media (max-width:880px){
+  .login-shell{grid-template-columns:1fr;}
+  .login-brand{padding:30px 26px 28px;}
+  .pulse-art{display:none;}
+  .login-headline{font-size:21px;max-width:none;}
+  .login-mission{margin-bottom:20px;max-width:none;}
+  .login-points{flex-direction:row;flex-wrap:wrap;gap:0 20px;}
+  .login-points li{border:none;padding:0;}
+  .login-points li:last-child{border:none;}
+  .login-brand-foot{display:none;}
+  .login-formwrap{padding:32px 24px 48px;}
 }
-.role-opt svg{display:block;margin:0 auto 5px;}
-.role-opt.active{border-color:var(--brand);background:var(--brand-light);color:var(--brand-darker);}
+@media (max-width:420px){
+  .login-brand{padding:26px 20px 24px;}
+  .login-points{gap:8px 14px;}
+  .login-points li{font-size:12px;}
+}

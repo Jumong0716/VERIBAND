@@ -12,83 +12,123 @@
 </head>
 <body>
 
-<div class="proto-badge">PROTOTYPE — sample data only</div>
 <div class="toast-wrap" id="toastWrap"></div>
 
-<div class="phone-stage">
-  <div class="stage-top">
-    <div class="user-mini"><div class="avatar" style="background:var(--blue-light);color:var(--blue-dark);">NS</div> Nurse Supervisor</div>
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="icon-btn hamburger" onclick="toggleSidebar('supSidebar')">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="brand"><div class="mark"><svg class="ic" style="width:15px;height:15px;stroke:#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg></div>VeriBand</div>
+    <span class="role-chip pill-blue">Nurse Supervisor</span>
+  </div>
+  <div class="topbar-right">
+    <div class="user-mini"><div class="avatar">NS</div>Nurse Supervisor</div>
     <button class="btn btn-sm" onclick="logout()">Log out</button>
   </div>
-  <div class="phone">
-    <div class="phone-screen">
-      <div class="phone-statusbar"><span>9:41</span><span>●●● VeriBand</span></div>
+</div>
 
-      <div class="app-header">
-        <div class="ah-row"><div><div class="ah-title" id="supTitle">Dashboard Overview</div><div class="ah-sub">Nurse Supervisor</div></div>
-        <button class="ah-iconbtn" onclick="logout()"><svg class="ic" style="stroke:#fff;width:16px;height:16px" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
+<div class="dash-layout">
+  <aside class="sidebar" id="supSidebar">
+    <button class="nav-item active" data-sp="dash" onclick="showSupPage('dash',this)">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </button>
+    <button class="nav-item" data-sp="records" onclick="showSupPage('records',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M8 3h8l4 4v14H4V3Z"/><path d="M8 11h8M8 15h8M8 7h3"/></svg>
+      Records
+    </button>
+    <button class="nav-item" data-sp="delayed" onclick="showSupPage('delayed',this)">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      Delayed
+    </button>
+    <button class="nav-item" data-sp="exceptions" onclick="showSupPage('exceptions',this)">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>
+      Exceptions
+    </button>
+    <button class="nav-item" data-sp="insights" onclick="showSupPage('insights',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+      VeriSense Insights
+    </button>
+    <div class="sidebar-foot">
+      <div class="user-mini"><div class="avatar">NS</div><div>Nurse Supervisor<div>All Wards</div></div></div>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="sup-dash">
+      <div class="page-head"><div><h2>Dashboard Overview</h2><p>Administration activity across all wards, today</p></div></div>
+      <div class="stat-row" id="supStatRow"></div>
+
+      <div class="dash-cols">
+        <div class="card pad-l">
+          <div class="card-head"><h3>Delayed Administrations</h3><button class="link-btn" onclick="showSupPage('delayed', document.querySelector('[data-sp=delayed]'))">View All</button></div>
+          <div id="supDelayedMini"></div>
+        </div>
+        <div class="card pad-l">
+          <div class="card-head"><h3>Recent Exceptions</h3><button class="link-btn" onclick="showSupPage('exceptions', document.querySelector('[data-sp=exceptions]'))">View All</button></div>
+          <div id="supExcMini"></div>
+        </div>
       </div>
 
-      <div class="small-tabs" style="padding:10px 16px 0;">
-        <button class="active" data-sp="dash" onclick="showSupPage('dash',this)">Dashboard</button>
-        <button data-sp="records" onclick="showSupPage('records',this)">Records</button>
-        <button data-sp="delayed" onclick="showSupPage('delayed',this)">Delayed</button>
-        <button data-sp="exceptions" onclick="showSupPage('exceptions',this)">Exceptions</button>
-        <button data-sp="insights" onclick="showSupPage('insights',this)">VeriSense</button>
+      <div class="insight-box" style="margin-top:16px;">
+        <div class="ic-wrap"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
+        <div><b>VeriSense Insight</b><p>Repeated delayed administrations observed during the morning medication round in Ward A. <button class="link-btn" onclick="showSupPage('insights', document.querySelector('[data-sp=insights]'))">View details</button></p></div>
       </div>
+    </div>
 
-      <div class="phone-body">
-        <div class="phone-page active" id="sup-dash">
-          <div class="stat-row" id="supStatRow"></div>
-          <div class="card pad-m" style="margin:14px 0;">
-            <div class="card-head"><h3 style="font-size:13px;">Delayed Administrations</h3><button class="link-btn" onclick="showSupPage('delayed', document.querySelector('[data-sp=delayed]'))">View All</button></div>
-            <div id="supDelayedMini"></div>
-          </div>
-          <div class="card pad-m" style="margin-bottom:14px;">
-            <div class="card-head"><h3 style="font-size:13px;">Recent Exceptions</h3><button class="link-btn" onclick="showSupPage('exceptions', document.querySelector('[data-sp=exceptions]'))">View All</button></div>
-            <div id="supExcMini"></div>
-          </div>
-          <div class="insight-box">
-            <div class="ic-wrap"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
-            <div><b>VeriSense Insight</b><p>Repeated delayed administrations observed during the morning medication round in Ward A. <button class="link-btn" onclick="showSupPage('insights', document.querySelector('[data-sp=insights]'))">View details</button></p></div>
-          </div>
+    <!-- RECORDS -->
+    <div class="page" id="sup-records">
+      <div class="page-head"><div><h2>Administration Records</h2><p>Every recorded administration across all patients</p></div></div>
+      <div class="card pad-l" style="max-width:700px;"><div id="supRecordsList"></div></div>
+    </div>
+
+    <!-- DELAYED -->
+    <div class="page" id="sup-delayed">
+      <div class="page-head"><div><h2>Delayed Administrations</h2><p>By ward, and individual delayed entries</p></div></div>
+      <div class="dash-cols">
+        <div class="card pad-l">
+          <h3 style="font-size:13.5px;margin:0 0 14px;">By Ward</h3>
+          <div id="supDelayedFull"></div>
         </div>
-
-        <div class="phone-page" id="sup-records">
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">All Administration Records</h3>
-          <div id="supRecordsList"></div>
-        </div>
-
-        <div class="phone-page" id="sup-delayed">
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">Delayed Administrations by Ward</h3>
-          <div id="supDelayedFull" style="margin-bottom:16px;"></div>
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">Delayed Entries</h3>
+        <div class="card pad-l">
+          <h3 style="font-size:13.5px;margin:0 0 14px;">Delayed Entries</h3>
           <div id="supDelayedEntries"></div>
-        </div>
-
-        <div class="phone-page" id="sup-exceptions">
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">Exceptions Log</h3>
-          <div id="supExcFull"></div>
-        </div>
-
-        <div class="phone-page" id="sup-insights">
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">Delay Analysis (This Week)</h3>
-          <div class="card pad-m" style="margin-bottom:14px;">
-            <div class="bars" id="delayBars"></div>
-          </div>
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">Exceptions Trend</h3>
-          <div class="card pad-m" style="margin-bottom:14px;display:flex;align-items:center;gap:16px;">
-            <div class="donut" id="excDonut"><div class="donut-center"><b id="excTotal">0</b><span>TOTAL</span></div></div>
-            <div class="legend" id="excLegend"></div>
-          </div>
-          <h3 style="font-size:13.5px;margin:2px 0 10px;">Ward Performance</h3>
-          <div class="card pad-m">
-            <div id="wardPerf"></div>
-          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- EXCEPTIONS -->
+    <div class="page" id="sup-exceptions">
+      <div class="page-head"><div><h2>Exceptions Log</h2><p>Refused, held, and not-administered doses</p></div></div>
+      <div class="card pad-l" style="max-width:900px;"><div id="supExcFull"></div></div>
+    </div>
+
+    <!-- VERISENSE INSIGHTS -->
+    <div class="page" id="sup-insights">
+      <div class="page-head"><div><h2>VeriSense Insights</h2><p>Delay trends and ward performance this week</p></div></div>
+      <div class="dash-cols">
+        <div class="card pad-l">
+          <h3 style="font-size:13.5px;margin:0 0 6px;">Delay Analysis (This Week)</h3>
+          <div class="bars" id="delayBars"></div>
+        </div>
+        <div class="card pad-l">
+          <h3 style="font-size:13.5px;margin:0 0 14px;">Exceptions Trend</h3>
+          <div style="display:flex;align-items:center;gap:20px;">
+            <div class="donut" id="excDonut"><div class="donut-center"><b id="excTotal">0</b><span>TOTAL</span></div></div>
+            <div class="legend" id="excLegend"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card pad-l" style="margin-top:16px;max-width:700px;">
+        <h3 style="font-size:13.5px;margin:0 0 14px;">Ward Performance</h3>
+        <div id="wardPerf"></div>
+      </div>
+    </div>
+
+  </main>
 </div>
 
 <script src="../js/toast.js"></script>

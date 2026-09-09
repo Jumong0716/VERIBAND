@@ -1,65 +1,65 @@
 /* ==========================================================================
-   VeriBand — Nurse App (mobile)
-   Phone-frame shell + every screen unique to the Nurse role: Home, Scan,
-   Medication Dashboard, VeriCheck, Confirm, Recorded, History, Alerts, More.
+   VeriBand — Nurse App (responsive web)
+   Topbar + sidebar dashboard shell (same pattern as Doctor/IT) and every
+   screen unique to Nurse: Home, Scan, Medication Dashboard, VeriCheck,
+   Confirm, Recorded, History, Alerts, More.
    Depends on: variables.css, base.css
    ========================================================================== */
 
-/* ---------- phone frame shell ---------- */
-.phone-stage{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
-  background:radial-gradient(circle at 30% 0%, #eef1f6, var(--bg));padding:30px 14px;
+/* ---------- top app bar ---------- */
+.topbar{
+  height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+  background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;
 }
-.phone-stage .stage-top{display:flex;align-items:center;gap:12px;width:390px;max-width:100%;justify-content:space-between;}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.topbar .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;}
+.topbar .brand .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(155deg,var(--brand),var(--brand-darker));display:flex;align-items:center;justify-content:center;color:#fff;}
+.topbar .role-chip{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.03em;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.hamburger{display:none;}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--brand-light);color:var(--brand-darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
 .user-mini{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;}
-.avatar{width:30px;height:30px;border-radius:50%;background:var(--brand-light);color:var(--brand-darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
 
-.phone{
-  width:375px;max-width:100%;height:780px;background:#0e1116;border-radius:44px;padding:12px;
-  box-shadow:0 30px 70px rgba(2,10,30,.35);position:relative;
+/* ---------- sidebar + dashboard layout ---------- */
+.dash-layout{display:flex;min-height:calc(100vh - 56px);}
+.sidebar{
+  width:224px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);
+  padding:18px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;
 }
-.phone-screen{
-  background:#fbfdfc;width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;
-  display:flex;flex-direction:column;
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;border:none;background:none;
+  font-size:13px;font-weight:600;color:var(--ink-soft);text-align:left;width:100%;
 }
-.phone-statusbar{height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:12px;font-weight:700;color:#fff;position:relative;z-index:5;flex-shrink:0;background:var(--brand-darker);}
+.nav-item svg{color:var(--muted);}
+.nav-item:hover{background:#f4f7f5;}
+.nav-item.active{background:var(--brand-light);color:var(--brand-darker);font-weight:700;}
+.nav-item.active svg{color:var(--brand-darker);}
+.sidebar-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);}
+.sidebar-foot .user-mini > div:last-child{font-size:10.5px;color:var(--muted);font-weight:600;}
 
-/* ---------- header ---------- */
-.app-header{padding:14px 18px 16px;color:#fff;flex-shrink:0;background:linear-gradient(120deg,var(--brand),var(--brand-darker));}
-.app-header .ah-row{display:flex;align-items:center;justify-content:space-between;}
-.app-header .ah-title{font-size:16px;font-weight:800;}
-.app-header .ah-sub{font-size:11.5px;opacity:.85;margin-top:2px;}
-.ah-iconbtn{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.16);border:none;color:#fff;display:flex;align-items:center;justify-content:center;}
-.back-row{display:flex;align-items:center;gap:8px;}
-.back-row button{background:none;border:none;color:#fff;display:flex;}
+.dash-main{flex:1;padding:22px 26px 60px;overflow-x:hidden;min-width:0;}
+.dash-main .page{display:none;}
+.dash-main .page.active{display:block;animation:fadeUp .22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.page-head h2{margin:0;font-size:19px;}
+.page-head p{margin:2px 0 0;font-size:12.5px;color:var(--muted);}
+.page-narrow{max-width:640px;}
 
-/* ---------- body / pages ---------- */
-.phone-body{flex:1;overflow-y:auto;padding:16px 16px 20px;}
-.phone-page{display:none;flex-direction:column;height:100%;}
-.phone-page.active{display:flex;}
-
-/* ---------- bottom nav ---------- */
-.phone-bottomnav{
-  display:flex;justify-content:space-around;align-items:center;background:#fff;border-top:1px solid var(--line);
-  padding:9px 6px 11px;flex-shrink:0;
-}
-.bn-item{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--muted);font-size:9.5px;font-weight:700;width:58px;}
-.bn-item.active{color:var(--brand-dark);}
-
-/* ---------- home screen ---------- */
-.home-greeting{font-size:12.5px;color:var(--muted);margin:2px 0 2px;}
-.home-name{font-size:19px;font-weight:800;margin:0 0 14px;}
-.home-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
-.home-stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 9px;text-align:center;}
-.home-stat .num{font-family:'Plus Jakarta Sans';font-size:19px;font-weight:800;color:var(--brand-darker);}
+/* ---------- home: stat cards ---------- */
+.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;max-width:640px;}
+.home-stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow);text-align:center;}
+.home-stat .num{font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800;color:var(--brand-darker);}
 .home-stat .num.amber{color:var(--amber);}
-.home-stat .lbl{font-size:9.5px;color:var(--muted);font-weight:700;margin-top:2px;line-height:1.3;}
+.home-stat .lbl{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:3px;}
 
-.home-actions{display:flex;flex-direction:column;gap:9px;margin-bottom:18px;}
+/* ---------- home: quick actions ---------- */
+.home-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;max-width:900px;}
 .home-action{
   display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:13px;
-  padding:12px 13px;text-align:left;
+  padding:14px 15px;text-align:left;box-shadow:var(--shadow);
 }
+.home-action:hover{border-color:#c9d5cf;}
 .home-action .ha-ic{
   width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
 }
@@ -72,13 +72,30 @@
 
 .current-patient-card{
   background:linear-gradient(135deg, var(--brand-light), #fff);border:1px solid var(--line);border-radius:14px;
-  padding:14px;margin-bottom:16px;
+  padding:16px;margin-bottom:22px;max-width:520px;
 }
+
+/* ---------- patient + med rows ---------- */
+.patient-strip{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;box-shadow:var(--shadow);max-width:520px;}
+.patient-strip .av{width:44px;height:44px;border-radius:50%;background:var(--brand-light);color:var(--brand-darker);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.patient-strip .pname{font-weight:800;font-size:14px;}
+.patient-strip .psub{font-size:11px;color:var(--muted);margin-top:1px;}
+
+.med-list{max-width:640px;}
+.med-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);}
+.med-row:last-child{border-bottom:none;}
+.med-row .mname{font-size:13.5px;font-weight:700;}
+.med-row .msub{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.med-row .mstatus{font-size:11px;font-weight:800;flex-shrink:0;margin-left:12px;}
+.med-row .mstatus.done{color:var(--brand-dark);}
+.med-row .mstatus.pending{color:var(--amber);}
+.med-row.clickable{cursor:pointer;}
+.med-row.clickable:hover{background:#f7f8fa;margin:0 -10px;padding:12px 10px;border-radius:8px;}
 
 /* ---------- scan screen ---------- */
 .scan-frame{
-  border:2px dashed #c7cede;border-radius:18px;height:230px;display:flex;align-items:center;justify-content:center;
-  background:#f4f5f9;margin:10px 0 16px;position:relative;overflow:hidden;
+  border:2px dashed #c7cede;border-radius:18px;height:260px;max-width:420px;display:flex;align-items:center;justify-content:center;
+  background:#f4f5f9;margin:14px 0 18px;position:relative;overflow:hidden;cursor:pointer;
 }
 .scan-frame .corner{position:absolute;width:26px;height:26px;border-color:var(--brand);}
 .scan-frame .c1{top:14px;left:14px;border-top:3px solid;border-left:3px solid;border-radius:6px 0 0 0;}
@@ -86,29 +103,13 @@
 .scan-frame .c3{bottom:14px;left:14px;border-bottom:3px solid;border-left:3px solid;border-radius:0 0 0 6px;}
 .scan-frame .c4{bottom:14px;right:14px;border-bottom:3px solid;border-right:3px solid;border-radius:0 0 6px 0;}
 .scan-line{position:absolute;left:14px;right:14px;height:2.5px;background:var(--brand);box-shadow:0 0 10px var(--brand);animation:scanmove 1.6s linear infinite;border-radius:2px;}
-@keyframes scanmove{0%{top:18px;}50%{top:205px;}100%{top:18px;}}
+@keyframes scanmove{0%{top:18px;}50%{top:235px;}100%{top:18px;}}
 .scanning-badge{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(14,17,22,.75);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;}
-
-/* ---------- patient + med rows ---------- */
-.patient-strip{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;box-shadow:var(--shadow);}
-.patient-strip .av{width:44px;height:44px;border-radius:50%;background:var(--brand-light);color:var(--brand-darker);display:flex;align-items:center;justify-content:center;font-weight:800;}
-.patient-strip .pname{font-weight:800;font-size:14px;}
-.patient-strip .psub{font-size:11px;color:var(--muted);margin-top:1px;}
-
-.med-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);}
-.med-row:last-child{border-bottom:none;}
-.med-row .mname{font-size:13.5px;font-weight:700;}
-.med-row .msub{font-size:11.5px;color:var(--muted);margin-top:2px;}
-.med-row .mstatus{font-size:11px;font-weight:800;}
-.med-row .mstatus.done{color:var(--brand-dark);}
-.med-row .mstatus.pending{color:var(--amber);}
-.med-row.clickable{cursor:pointer;}
-.med-row.clickable:hover{background:#f7f8fa;margin:0 -8px;padding:12px 8px;border-radius:8px;}
 
 /* ---------- VeriCheck checklist ---------- */
 .check-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;}
 .check-row:last-child{border-bottom:none;}
-.chk-circ{width:21px;height:21px;border-radius:50%;border:2px solid #cfd4da;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;}
+.chk-circ{width:21px;height:21px;border-radius:50%;border:2px solid #cfd4da;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;background:none;}
 .chk-circ.on{background:var(--brand);border-color:var(--brand);}
 .check-row.optional{color:var(--muted);font-weight:500;}
 
@@ -120,7 +121,7 @@
 .status-chip.bad.active{border-color:var(--red);background:var(--red-light);color:var(--red);}
 
 /* ---------- recorded (success) screen ---------- */
-.success-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:0 10px;}
+.success-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:60px 10px;}
 .success-check{width:78px;height:78px;border-radius:50%;background:var(--brand-light);display:flex;align-items:center;justify-content:center;color:var(--brand-dark);animation:pop .35s ease;}
 @keyframes pop{0%{transform:scale(.5);opacity:0;}70%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
 
@@ -138,10 +139,28 @@
 .empty-state h4{margin:0 0 4px;color:var(--ink-soft);font-size:14px;}
 .empty-state p{margin:0;font-size:12.5px;}
 
-/* ---------- responsive: full-bleed phone on small screens ---------- */
-@media (max-width:480px){
-  .phone{border-radius:0;width:100%;height:100vh;padding:0;box-shadow:none;}
-  .phone-screen{border-radius:0;}
-  .phone-stage{padding:0;}
-  .stage-top{padding:10px 14px;}
+/* ---------- back link ---------- */
+.back-link{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--ink-soft);font-weight:700;font-size:12.5px;padding:0;margin-bottom:14px;}
+.back-link:hover{color:var(--ink);}
+
+/* ---------- fields max-width on wide screens ---------- */
+#nurse-more .field{max-width:420px;}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .home-stats{grid-template-columns:repeat(3,1fr);}
+  .home-actions{grid-template-columns:1fr 1fr;}
+  .sidebar{
+    position:fixed;left:-260px;top:56px;bottom:0;z-index:80;transition:left .2s ease;box-shadow:0 10px 40px rgba(0,0,0,.15);
+  }
+  .sidebar.open{left:0;}
+  .hamburger{display:flex;}
+  .dash-main{padding:16px;}
+}
+@media (max-width:560px){
+  .home-stats{grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .home-stat{padding:12px 8px;}
+  .home-stat .num{font-size:19px;}
+  .home-actions{grid-template-columns:1fr;}
+  .scan-frame{height:220px;}
 }

@@ -43,15 +43,23 @@ function activePatients(){ return state.patients.filter(p => p.status === 'Activ
 function allMeds(){ return Object.values(state.meds).flat(); }
 
 /* ============================= navigation ============================= */
-const BOTTOMNAV_MAP = { 'nurse-home': 0, 'nurse-dashboard': 0, 'nurse-history': 1, 'nurse-scan': 2, 'nurse-alerts': 3, 'nurse-more': 4 };
+const NAV_MAP = {
+  'nurse-home': 'nurse-home', 'nurse-dashboard': 'nurse-home',
+  'nurse-scan': 'nurse-scan', 'nurse-vericheck': 'nurse-scan', 'nurse-confirm': 'nurse-scan', 'nurse-recorded': 'nurse-scan',
+  'nurse-alerts': 'nurse-alerts',
+  'nurse-history': 'nurse-history',
+  'nurse-more': 'nurse-more',
+};
+
+function toggleSidebar(id){ document.getElementById(id).classList.toggle('open'); }
 
 function gotoNursePage(id){
-  document.querySelectorAll('.phone-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.dash-main > .page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
-  if(id in BOTTOMNAV_MAP){
-    document.querySelectorAll(`#${id} .bn-item`)[BOTTOMNAV_MAP[id]]?.classList.add('active');
-  }
+  document.querySelectorAll('#nurseSidebar .nav-item').forEach(b => b.classList.remove('active'));
+  const navId = NAV_MAP[id] || id;
+  document.querySelector(`#nurseSidebar [data-nv="${navId}"]`)?.classList.add('active');
+  document.getElementById('nurseSidebar').classList.remove('open');
   if(id === 'nurse-home') renderHome();
   if(id === 'nurse-dashboard') renderMedDashboard();
   if(id === 'nurse-history') renderHistory('all');
@@ -288,4 +296,4 @@ function renderRecentPatients(){
 }
 function logout(){ window.location.href = '../index.html'; }
 
-document.addEventListener('DOMContentLoaded', initNurseApp);
+document.addEventListener('DOMContentLoaded', initNurseApp);  

@@ -21,15 +21,15 @@ const state = {
 
 /* ============================= HELPERS ============================= */
 function logout(){ window.location.href = '../index.html'; }
+function toggleSidebar(id){ document.getElementById(id).classList.toggle('open'); }
 
 /* ============================= NAVIGATION ============================= */
 function showSupPage(page, btn){
-  document.querySelectorAll('.small-tabs button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#supSidebar .nav-item').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  document.querySelectorAll('.phone-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('supSidebar').classList.remove('open');
+  document.querySelectorAll('.dash-main > .page').forEach(p=>p.classList.remove('active'));
   document.getElementById('sup-'+page).classList.add('active');
-  const titles = {dash:'Dashboard Overview', records:'Administration Records', delayed:'Delayed Administrations', exceptions:'Exceptions Log', insights:'VeriSense Insights'};
-  document.getElementById('supTitle').textContent = titles[page];
   if(page==='dash') renderSupDash();
   if(page==='records') renderSupRecords();
   if(page==='delayed') renderSupDelayed();

@@ -1,59 +1,66 @@
 /* ==========================================================================
-   VeriBand — Nurse Supervisor App (mobile)
-   Phone-frame shell + every screen unique to the Supervisor role:
-   Dashboard, Records, Delayed, Exceptions, VeriSense Insights.
+   VeriBand — Nurse Supervisor App (responsive web)
+   Topbar + sidebar dashboard shell (same pattern as Doctor/IT/Nurse) and
+   every screen unique to Supervisor: Dashboard, Records, Delayed,
+   Exceptions, VeriSense Insights.
    Depends on: variables.css, base.css
    ========================================================================== */
 
-/* ---------- phone frame shell ---------- */
-.phone-stage{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
-  background:radial-gradient(circle at 30% 0%, #eef1f6, var(--bg));padding:30px 14px;
+/* ---------- top app bar ---------- */
+.topbar{
+  height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+  background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;
 }
-.phone-stage .stage-top{display:flex;align-items:center;gap:12px;width:390px;max-width:100%;justify-content:space-between;}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.topbar .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;}
+.topbar .brand .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(155deg,var(--blue),var(--blue-dark));display:flex;align-items:center;justify-content:center;color:#fff;}
+.topbar .role-chip{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.03em;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.hamburger{display:none;}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--blue-light);color:var(--blue-dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
 .user-mini{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;}
-.avatar{width:30px;height:30px;border-radius:50%;background:var(--brand-light);color:var(--brand-darker);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
 
-.phone{
-  width:375px;max-width:100%;height:780px;background:#0e1116;border-radius:44px;padding:12px;
-  box-shadow:0 30px 70px rgba(2,10,30,.35);position:relative;
+/* ---------- sidebar + dashboard layout ---------- */
+.dash-layout{display:flex;min-height:calc(100vh - 56px);}
+.sidebar{
+  width:224px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);
+  padding:18px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;
 }
-.phone-screen{
-  background:#fbfdfc;width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;
-  display:flex;flex-direction:column;
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;border:none;background:none;
+  font-size:13px;font-weight:600;color:var(--ink-soft);text-align:left;width:100%;
 }
-.phone-statusbar{height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:12px;font-weight:700;color:#fff;position:relative;z-index:5;flex-shrink:0;background:var(--blue-dark);}
+.nav-item svg{color:var(--muted);}
+.nav-item:hover{background:#f4f7f5;}
+.nav-item.active{background:var(--blue-light);color:var(--blue-dark);font-weight:700;}
+.nav-item.active svg{color:var(--blue-dark);}
+.sidebar-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);}
+.sidebar-foot .user-mini > div:last-child{font-size:10.5px;color:var(--muted);font-weight:600;}
 
-/* ---------- header ---------- */
-.app-header{padding:14px 18px 16px;color:#fff;flex-shrink:0;background:linear-gradient(120deg,var(--blue),var(--blue-dark));}
-.app-header .ah-row{display:flex;align-items:center;justify-content:space-between;}
-.app-header .ah-title{font-size:16px;font-weight:800;}
-.app-header .ah-sub{font-size:11.5px;opacity:.85;margin-top:2px;}
-.ah-iconbtn{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.16);border:none;color:#fff;display:flex;align-items:center;justify-content:center;}
-
-/* ---------- section tabs ---------- */
-.small-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;}
-.small-tabs button{flex-shrink:0;padding:7px 13px;border-radius:99px;border:1.4px solid var(--line);background:#fff;font-size:12px;font-weight:700;color:var(--ink-soft);}
-.small-tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;}
-
-/* ---------- body / pages ---------- */
-.phone-body{flex:1;overflow-y:auto;padding:16px 16px 20px;}
-.phone-page{display:none;flex-direction:column;height:100%;}
-.phone-page.active{display:flex;}
+.dash-main{flex:1;padding:22px 26px 60px;overflow-x:hidden;min-width:0;}
+.dash-main .page{display:none;}
+.dash-main .page.active{display:block;animation:fadeUp .22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.page-head h2{margin:0;font-size:19px;}
+.page-head p{margin:2px 0 0;font-size:12.5px;color:var(--muted);}
 
 /* ---------- stat cards (dashboard) ---------- */
-.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:900px;}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);}
-.stat .num{font-family:'Plus Jakarta Sans';font-size:21px;font-weight:800;margin-top:4px;}
+.stat .num{font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800;margin-top:4px;}
 .stat .lbl{font-size:12px;color:var(--muted);font-weight:600;}
 .stat .num.red{color:var(--red);}
 .stat .num.amber{color:var(--amber);}
 .stat .num.green{color:var(--brand);}
 
+/* ---------- two-column dashboard content ---------- */
+.dash-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;max-width:900px;}
+
 /* ---------- insight box (VeriSense) ---------- */
 .insight-box{
   background:linear-gradient(155deg,#e9fbf8,#eef6ff);border:1px solid #d7ece9;border-radius:12px;padding:14px 16px;
-  display:flex;gap:10px;align-items:flex-start;
+  display:flex;gap:10px;align-items:flex-start;max-width:900px;
 }
 .insight-box .ic-wrap{width:32px;height:32px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0;box-shadow:var(--shadow);}
 .insight-box b{display:block;font-size:12.5px;margin-bottom:3px;}
@@ -62,44 +69,53 @@
 /* ---------- records / exceptions lists ---------- */
 .hist-item{display:flex;justify-content:space-between;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);}
 .hist-item:last-child{border-bottom:none;}
-.exc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px;}
+.exc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:12.5px;}
 .exc-row:last-child{border-bottom:none;}
 
 /* ---------- horizontal bars (delayed by ward / ward performance) ---------- */
 .hbar-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:12.5px;}
-.hbar-row .hb-lbl{width:56px;flex-shrink:0;font-weight:700;color:var(--ink-soft);}
+.hbar-row .hb-lbl{width:64px;flex-shrink:0;font-weight:700;color:var(--ink-soft);}
 .hbar-track{flex:1;height:9px;background:#eef2f0;border-radius:99px;overflow:hidden;}
 .hbar-fill{height:100%;border-radius:99px;background:var(--teal);}
-.hbar-val{width:38px;text-align:right;font-weight:700;color:var(--ink-soft);}
+.hbar-val{width:40px;text-align:right;font-weight:700;color:var(--ink-soft);}
 
 /* ---------- vertical bar chart (delay analysis) ---------- */
-.bars{display:flex;align-items:flex-end;gap:9px;height:110px;padding-top:6px;}
+.bars{display:flex;align-items:flex-end;gap:14px;height:130px;padding-top:6px;max-width:480px;}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;}
-.bar-stack{width:100%;max-width:26px;display:flex;flex-direction:column-reverse;border-radius:4px;overflow:hidden;}
+.bar-stack{width:100%;max-width:34px;display:flex;flex-direction:column-reverse;border-radius:4px;overflow:hidden;}
 .bar-seg{width:100%;}
-.bar-col .bx-lbl{font-size:10.5px;color:var(--muted);font-weight:700;}
+.bar-col .bx-lbl{font-size:11px;color:var(--muted);font-weight:700;}
 
 /* ---------- donut + legend (exceptions trend) ---------- */
-.donut{width:104px;height:104px;border-radius:50%;flex-shrink:0;position:relative;}
-.donut::after{content:'';position:absolute;inset:15px;background:#fff;border-radius:50%;display:flex;}
+.donut{width:120px;height:120px;border-radius:50%;flex-shrink:0;position:relative;}
+.donut::after{content:'';position:absolute;inset:17px;background:#fff;border-radius:50%;display:flex;}
 .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.donut-center b{font-size:19px;font-family:'Plus Jakarta Sans';}
+.donut-center b{font-size:21px;font-family:'Plus Jakarta Sans';}
 .donut-center span{font-size:10px;color:var(--muted);font-weight:700;}
-.legend{display:flex;flex-direction:column;gap:7px;font-size:12px;}
+.legend{display:flex;flex-direction:column;gap:8px;font-size:12.5px;}
 .legend-item{display:flex;align-items:center;gap:7px;}
 .legend-sw{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
 
-/* ---------- tables (used inside the Exceptions Log page) ---------- */
+/* ---------- tables (Exceptions Log) ---------- */
 table{width:100%;border-collapse:collapse;font-size:13px;}
 th{text-align:left;color:var(--muted);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;padding:0 10px 10px;border-bottom:1px solid var(--line);}
 td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 .table-wrap{overflow-x:auto;}
 
-/* ---------- responsive: full-bleed phone on small screens ---------- */
-@media (max-width:480px){
-  .phone{border-radius:0;width:100%;height:100vh;padding:0;box-shadow:none;}
-  .phone-screen{border-radius:0;}
-  .phone-stage{padding:0;}
-  .stage-top{padding:10px 14px;}
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .stat-row{grid-template-columns:1fr 1fr;}
+  .dash-cols{grid-template-columns:1fr;}
+  .sidebar{
+    position:fixed;left:-260px;top:56px;bottom:0;z-index:80;transition:left .2s ease;box-shadow:0 10px 40px rgba(0,0,0,.15);
+  }
+  .sidebar.open{left:0;}
+  .hamburger{display:flex;}
+  .dash-main{padding:16px;}
+}
+@media (max-width:560px){
+  .stat-row{grid-template-columns:1fr 1fr;gap:10px;}
+  .insight-box{flex-direction:column;}
+  .bars{gap:8px;}
 }
