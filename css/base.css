@@ -1,0 +1,106 @@
+/* ==========================================================================
+   VeriBand — Base & Shared Components
+   Resets, typography, and the small set of components every page reuses
+   (buttons, form fields, icons, toast, prototype badge).
+   Depends on: variables.css
+   ========================================================================== */
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.display{font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
+button{font-family:inherit;cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+a{color:inherit;}
+.hidden{display:none !important;}
+::selection{background:var(--brand-light);}
+
+/* ---------- prototype badge ---------- */
+.proto-badge{
+  position:fixed;top:10px;right:10px;z-index:999;
+  background:var(--ink);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:6px 10px;border-radius:999px;opacity:.78;pointer-events:none;
+}
+
+/* ---------- toast ---------- */
+.toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;flex-direction:column;gap:8px;align-items:center;}
+.toast{
+  background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:600;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  animation:toastIn .25s ease;
+  display:flex;align-items:center;gap:8px;
+}
+.toast.ok{background:var(--brand-dark);}
+.toast.warn{background:#8a5a15;}
+.toast.err{background:#8a2a2a;}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  padding:10px 16px;border-radius:10px;font-size:13.5px;font-weight:600;
+  transition:.15s ease;white-space:nowrap;
+}
+.btn:hover{border-color:#c9d5cf;background:#fafcfb;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--brand);border-color:var(--brand);color:#fff;}
+.btn-primary:hover{background:var(--brand-dark);border-color:var(--brand-dark);}
+.btn-blue{background:var(--blue);border-color:var(--blue);color:#fff;}
+.btn-blue:hover{background:var(--blue-dark);border-color:var(--blue-dark);}
+.btn-ghost{background:transparent;border-color:transparent;}
+.btn-ghost:hover{background:rgba(0,0,0,.05);}
+.btn-danger{background:#fff;border-color:var(--red);color:var(--red);}
+.btn-danger:hover{background:var(--red-light);}
+.btn-sm{padding:6px 11px;font-size:12.5px;border-radius:8px;}
+.btn-block{width:100%;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.icon-btn{
+  width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;
+  display:inline-flex;align-items:center;justify-content:center;color:var(--ink-soft);
+}
+.icon-btn:hover{background:#f4f7f5;}
+.link-btn{background:none;border:none;color:var(--brand-dark);font-weight:700;font-size:12.5px;padding:0;}
+.link-btn:hover{text-decoration:underline;}
+
+/* ---------- form fields ---------- */
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;letter-spacing:.01em;}
+.field input, .field select, .field textarea{
+  width:100%;padding:10px 12px;border:1.4px solid var(--line);border-radius:9px;font-size:13.5px;color:var(--ink);
+  background:#fbfdfc;outline:none;transition:.15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px var(--brand-light);}
+.field textarea{resize:vertical;min-height:70px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+/* ---------- icons ---------- */
+svg.ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+
+/* ---------- pills / badges (used on most pages) ---------- */
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700;}
+.pill-green{background:var(--green-light);color:var(--brand-dark);}
+.pill-amber{background:var(--amber-light);color:var(--amber);}
+.pill-red{background:var(--red-light);color:var(--red);}
+.pill-grey{background:#eef1ef;color:var(--muted);}
+.pill-blue{background:var(--blue-light);color:var(--blue-dark);}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;}
+
+/* ---------- generic card ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+.pad-l{padding:20px;}
+.pad-m{padding:16px;}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.card-head h3{margin:0;font-size:15px;}
+.card-title-sm{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px;}
+
+/* ---------- responsive helpers ---------- */
+@media (max-width:480px){
+  .grid-2{grid-template-columns:1fr;}
+}

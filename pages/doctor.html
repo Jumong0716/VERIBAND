@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriBand — Doctor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/doctor.css">
+</head>
+<body>
+
+<div class="proto-badge">PROTOTYPE — sample data only</div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="icon-btn hamburger" onclick="toggleSidebar('drSidebar')">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="brand"><div class="mark"><svg class="ic" style="width:15px;height:15px;stroke:#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg></div>VeriBand</div>
+    <span class="role-chip pill-blue">Doctor</span>
+  </div>
+  <div class="topbar-right">
+    <div class="user-mini"><div class="avatar" style="background:var(--blue-light);color:var(--blue-dark);">MR</div>Dr. Maria Reyes</div>
+    <button class="btn btn-sm" onclick="logout()">Log out</button>
+  </div>
+</div>
+
+<div class="dash-layout">
+  <aside class="sidebar" id="drSidebar">
+    <button class="nav-item blue active" data-dr="home" onclick="showDrNav('home',this)">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </button>
+    <div class="grp-label">Medication Management</div>
+    <button class="nav-item blue" data-dr="search" onclick="showDrNav('search',this)">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      Patient Search
+    </button>
+    <button class="nav-item blue" data-dr="orders" onclick="showDrNav('orders',this)">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+      Medication Orders
+    </button>
+    <button class="nav-item blue" data-dr="history" onclick="showDrNav('history',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+      Order History
+    </button>
+    <button class="nav-item blue" data-dr="discontinued" onclick="showDrNav('discontinued',this)">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>
+      Discontinued Orders
+    </button>
+    <div class="grp-label">Records</div>
+    <button class="nav-item blue" data-dr="status" onclick="showDrNav('status',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      Administration Status
+    </button>
+    <button class="nav-item blue" data-dr="medhistory" onclick="showDrNav('medhistory',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M8 3h8l4 4v14H4V3Z"/><path d="M8 11h8M8 15h8M8 7h3"/></svg>
+      Medication History
+    </button>
+    <button class="nav-item blue" data-dr="reports" onclick="showDrNav('reports',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+      Reports
+    </button>
+    <div class="sidebar-foot">
+      <div class="user-mini"><div class="avatar" style="background:var(--blue-light);color:var(--blue-dark);">MR</div><div>Dr. Maria Reyes<div style="font-size:10.5px;color:var(--muted);font-weight:600;">Doctor</div></div></div>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+
+    <!-- Dashboard -->
+    <div class="page active" id="dr-home">
+      <div class="page-head"><div><h2>Dashboard</h2><p>Your patients and medication activity at a glance</p></div></div>
+      <div class="stat-row" id="drStatRow"></div>
+      <div class="card pad-l" style="margin-top:16px;">
+        <div class="card-head"><h3>Recent Patients</h3><button class="link-btn" onclick="showDrNav('search', document.querySelector('[data-dr=search]'))">Search all patients</button></div>
+        <div id="drRecentPatients"></div>
+      </div>
+    </div>
+
+    <!-- Patient Search -->
+    <div class="page" id="dr-search">
+      <div class="page-head"><div><h2>Patient Search</h2><p>Find a patient to review or manage medication orders</p></div></div>
+      <input id="drSearchInput" placeholder="Search by name or Patient ID..." style="width:100%;max-width:360px;padding:10px 13px;border:1.4px solid var(--line);border-radius:9px;font-size:13.5px;margin-bottom:14px;" oninput="renderDrSearchResults()">
+      <div class="card pad-l"><div id="drSearchResults"></div></div>
+    </div>
+
+    <!-- Patient Profile -->
+    <div class="page" id="dr-profile">
+      <button class="link-btn" style="margin-bottom:10px;" onclick="showDrNav('search', document.querySelector('[data-dr=search]'))">&larr; Back to Search</button>
+      <div class="card pad-l" style="margin-bottom:16px;">
+        <div class="profile-hd">
+          <div class="av-lg" id="drProfAvatar">JD</div>
+          <div>
+            <h2 style="margin:0;font-size:17px;" id="drProfName">—</h2>
+            <div class="profile-meta">
+              <span>Patient ID: <b id="drProfId">—</b></span>
+              <span id="drProfGender">—</span>
+              <span id="drProfWard">—</span>
+            </div>
+          </div>
+          <div style="margin-left:auto;"><span class="pill pill-green" id="drProfStatus">Active</span></div>
+        </div>
+      </div>
+
+      <div class="tabbar">
+        <button class="tabbtn blue active" data-drtab="orders" onclick="showDrTab('orders',this)">Medication Orders</button>
+        <button class="tabbtn blue" data-drtab="status" onclick="showDrTab('status',this)">Administration Status</button>
+        <button class="tabbtn blue" data-drtab="history" onclick="showDrTab('history',this)">Medication History</button>
+      </div>
+
+      <div class="tabpanel active" id="drtab-orders">
+        <div class="card-head"><h3 style="margin:0;">Active Medication Orders</h3><button class="btn btn-blue btn-sm" onclick="openNewOrder()">+ New Order</button></div>
+        <div class="card pad-l" style="margin-bottom:18px;">
+          <div class="table-wrap"><table>
+            <thead><tr><th>Medication</th><th>Dose</th><th>Route</th><th>Schedule</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="drActiveOrders"></tbody>
+          </table></div>
+        </div>
+        <h3 style="margin:0 0 10px;font-size:14px;">Discontinued Orders</h3>
+        <div class="card pad-l">
+          <div class="table-wrap"><table>
+            <thead><tr><th>Medication</th><th>Dose</th><th>Route</th><th>Discontinued On</th><th>Reason</th></tr></thead>
+            <tbody id="drDiscOrders"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="tabpanel" id="drtab-status">
+        <div class="card pad-l"><div class="table-wrap"><table>
+          <thead><tr><th>Medication</th><th>Scheduled Time</th><th>Status</th><th>Recorded By</th><th>Notes</th></tr></thead>
+          <tbody id="drStatusTable"></tbody>
+        </table></div></div>
+      </div>
+
+      <div class="tabpanel" id="drtab-history">
+        <div class="card pad-l" id="drHistoryList"></div>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="page" id="dr-reports">
+      <div class="page-head"><div><h2>Reports</h2><p>Facility-wide medication order overview</p></div></div>
+      <div class="stat-row" id="drReportStats"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- New Order Modal -->
+<div class="modal-bg" id="modalNewOrder">
+  <div class="modal">
+    <div class="modal-hd"><h3>New Medication Order</h3><button class="icon-btn" onclick="closeModal('modalNewOrder')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Medication</label>
+        <select id="ord-med"><option>Paracetamol</option><option>Amoxicillin</option><option>Omeprazole</option><option>Ibuprofen</option><option>Cefuroxime</option><option>Metformin</option><option>Losartan</option></select>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>Dose</label><input id="ord-dose" placeholder="e.g. 500 mg"></div>
+        <div class="field"><label>Route</label><select id="ord-route"><option>Oral</option><option>IV</option><option>IM</option><option>Sublingual</option></select></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>Time</label><input id="ord-time" type="time" value="08:00"></div>
+        <div class="field"><label>Frequency</label><select id="ord-freq"><option>Daily</option><option>BID</option><option>TID</option><option>QID</option><option>Once</option></select></div>
+      </div>
+      <div class="field"><label>Notes (optional)</label><textarea id="ord-notes" placeholder="Special instructions..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalNewOrder')">Cancel</button>
+      <button class="btn btn-blue" onclick="saveNewOrder()">Save Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- Discontinue Order Modal -->
+<div class="modal-bg" id="modalDiscontinue">
+  <div class="modal">
+    <div class="modal-hd"><h3>Discontinue Order</h3><button class="icon-btn" onclick="closeModal('modalDiscontinue')">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Discontinuing <b id="discMedName">—</b>. Please provide a reason.</p>
+      <div class="field"><label>Reason</label>
+        <select id="disc-reason"><option>Therapy Completed</option><option>Adverse Reaction</option><option>No Longer Indicated</option><option>Physician Order Change</option></select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalDiscontinue')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDiscontinue()">Discontinue</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/toast.js"></script>
+<script src="../js/doctor.js"></script>
+</body>
+</html>

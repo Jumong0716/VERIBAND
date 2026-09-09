@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriBand — IT Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/it.css">
+</head>
+<body>
+
+<div class="proto-badge">PROTOTYPE — sample data only</div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="icon-btn hamburger" onclick="toggleSidebar('itSidebar')">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="brand"><div class="mark"><svg class="ic" style="width:15px;height:15px;stroke:#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg></div>VeriBand</div>
+    <span class="role-chip pill-green">IT Support / System Staff</span>
+  </div>
+  <div class="topbar-right">
+    <div class="user-mini"><div class="avatar">IT</div> IT Support</div>
+    <button class="btn btn-sm" onclick="logout()">Log out</button>
+  </div>
+</div>
+
+<div class="dash-layout">
+  <aside class="sidebar" id="itSidebar">
+    <button class="nav-item active" data-it="dashboard" onclick="showIt('dashboard',this)">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </button>
+    <div class="grp-label">Patient Management</div>
+    <button class="nav-item" data-it="admission" onclick="showIt('admission',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      Patient Admission
+    </button>
+    <button class="nav-item" data-it="list" onclick="showIt('list',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      Patient List
+    </button>
+    <button class="nav-item" data-it="print" onclick="showIt('print',this)">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M7 9V4h10v5M7 17v3h10v-3"/></svg>
+      Wristband Printing
+    </button>
+    <button class="nav-item" data-it="reprint" onclick="showIt('reprint',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>
+      Wristband Reprint
+    </button>
+    <button class="nav-item" data-it="release" onclick="showIt('release',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Patient Release
+    </button>
+    <div class="grp-label">User &amp; System</div>
+    <button class="nav-item" data-it="users" onclick="showIt('users',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      User Management
+    </button>
+    <button class="nav-item" data-it="roles" onclick="showIt('roles',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3.5v5c0 4.6-3.2 8.4-8 9.5-4.8-1.1-8-4.9-8-9.5v-5L12 3Z"/></svg>
+      Roles &amp; Permissions
+    </button>
+    <button class="nav-item" data-it="logs" onclick="showIt('logs',this)">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M8 3h8l4 4v14H4V3Z"/><path d="M8 11h8M8 15h8M8 7h3"/></svg>
+      System Logs
+    </button>
+    <button class="nav-item" data-it="printer" onclick="showIt('printer',this)">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M7 9V4h10v5M7 17v3h10v-3"/><circle cx="16.5" cy="12" r=".6"/></svg>
+      Printer Settings
+    </button>
+    <button class="nav-item" data-it="backups" onclick="showIt('backups',this)">
+      <svg class="ic" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+      Backups
+    </button>
+    <div class="sidebar-foot">
+      <div class="user-mini" style="margin-bottom:10px;"><div class="avatar">IT</div><div>IT Support<div style="font-size:10.5px;color:var(--muted);font-weight:600;">● Online</div></div></div>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+
+    <!-- Dashboard -->
+    <div class="page active" id="it-dashboard">
+      <div class="page-head"><div><h2>Dashboard</h2><p>Facility-wide admissions and wristband overview</p></div></div>
+      <div class="stat-row" id="itStatRow"></div>
+      <div class="two-col" style="margin-top:16px;">
+        <div class="card pad-l">
+          <div class="card-head"><h3>Recent Admissions</h3><button class="link-btn" onclick="showIt('list', document.querySelector('[data-it=list]'))">View All</button></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Patient ID</th><th>Patient Name</th><th>Admitted On</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="itRecentAdmissions"></tbody>
+          </table></div>
+        </div>
+        <div class="card pad-l">
+          <h3 style="margin:0 0 12px;">Wristband Summary</h3>
+          <div style="display:flex;align-items:center;gap:18px;">
+            <div class="donut" id="wristDonut"><div class="donut-center"><b id="wristTotal">0</b><span>TOTAL</span></div></div>
+            <div class="legend" id="wristLegend"></div>
+          </div>
+          <h3 style="margin:20px 0 10px;font-size:13.5px;">System Status</h3>
+          <div style="font-size:12.5px;display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;justify-content:space-between;"><span>Database</span><span class="pill pill-green">Online</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>API Server</span><span class="pill pill-green">Online</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Backup</span><span class="pill pill-grey" id="lastBackupPill">—</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Printer</span><span class="pill pill-green">Online</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patient Admission -->
+    <div class="page" id="it-admission">
+      <div class="page-head"><div><h2>Patient Admission</h2><p>Register a new patient and activate their record</p></div></div>
+      <div class="two-col">
+        <div class="card pad-l">
+          <div class="grid-2">
+            <div class="field"><label>Full Name</label><input id="adm-name" placeholder="e.g. Rosa Fernandez"></div>
+            <div class="field"><label>Age</label><input id="adm-age" type="number" placeholder="e.g. 34"></div>
+            <div class="field"><label>Gender</label><select id="adm-gender"><option>Female</option><option>Male</option><option>Other</option></select></div>
+            <div class="field"><label>Ward</label><select id="adm-ward"><option>Ward A</option><option>Ward B</option><option>Ward C</option><option>Ward D</option></select></div>
+            <div class="field"><label>Room No.</label><input id="adm-room" placeholder="e.g. 14"></div>
+            <div class="field"><label>Attending Doctor</label>
+              <select id="adm-doctor"><option>Dr. Maria Reyes</option><option>Dr. Kevin Uy</option><option>Dr. Alma Ferrer</option></select>
+            </div>
+          </div>
+          <div class="field"><label>Admission Notes (optional)</label><textarea id="adm-notes" placeholder="Allergies, condition summary, etc."></textarea></div>
+          <button class="btn btn-primary" onclick="admitPatient()">
+            <svg class="ic" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Admit Patient &amp; Activate Record
+          </button>
+        </div>
+        <div class="insight-box">
+          <div class="ic-wrap"><svg class="ic" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
+          <div><b>What happens next</b><p>Admitting a patient creates an active record, then appears in Patient List and Recent Admissions. Head to <b>Wristband Printing</b> to generate their QR-enabled wristband.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patient List -->
+    <div class="page" id="it-list">
+      <div class="page-head"><div><h2>Patient List</h2><p>All admitted patients across the facility</p></div>
+        <input id="patientSearchIt" placeholder="Search patient or ID..." style="padding:9px 12px;border:1.4px solid var(--line);border-radius:9px;font-size:13px;width:220px;" oninput="renderPatientListIt()">
+      </div>
+      <div class="card pad-l">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Patient ID</th><th>Name</th><th>Ward / Room</th><th>Admitted</th><th>Status</th><th>Wristband</th><th>Action</th></tr></thead>
+          <tbody id="itPatientList"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- Wristband Printing -->
+    <div class="page" id="it-print">
+      <div class="page-head"><div><h2>Wristband Printing</h2><p>Generate a QR-enabled wristband for a newly admitted patient</p></div></div>
+      <div class="two-col">
+        <div class="card pad-l">
+          <div class="field"><label>Select Patient</label>
+            <select id="print-select" onchange="renderPrintPreview()"></select>
+          </div>
+          <div id="printPreviewBox"></div>
+        </div>
+        <div class="card pad-l">
+          <h3 style="margin-top:0;font-size:13.5px;">Recently Printed</h3>
+          <div id="printLogList" style="font-size:12.5px;display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wristband Reprint -->
+    <div class="page" id="it-reprint">
+      <div class="page-head"><div><h2>Wristband Reprint</h2><p>Reissue a wristband for lost, damaged, or unreadable QR codes</p></div></div>
+      <div class="card pad-l">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Patient ID</th><th>Name</th><th>Ward / Room</th><th>Times Reprinted</th><th>Action</th></tr></thead>
+          <tbody id="itReprintList"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- Patient Release -->
+    <div class="page" id="it-release">
+      <div class="page-head"><div><h2>Patient Release</h2><p>Record discharge and deactivate the patient's wristband</p></div></div>
+      <div class="card pad-l">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Patient ID</th><th>Name</th><th>Ward / Room</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="itReleaseList"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- User Management -->
+    <div class="page" id="it-users">
+      <div class="page-head"><div><h2>User Management</h2><p>Manage clinical and administrative staff accounts</p></div>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modalAddUser')">+ Add User</button>
+      </div>
+      <div class="card pad-l">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="itUserList"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- Roles & Permissions -->
+    <div class="page" id="it-roles">
+      <div class="page-head"><div><h2>Roles &amp; Permissions</h2><p>Control what each role can access in VeriBand</p></div></div>
+      <div class="card pad-l">
+        <div class="table-wrap"><table id="rolesMatrix">
+          <thead><tr><th>Permission</th><th>Nurse</th><th>Doctor</th><th>Nurse Supervisor</th><th>IT Support</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- System Logs -->
+    <div class="page" id="it-logs">
+      <div class="page-head"><div><h2>System Logs</h2><p>Recent system and security activity</p></div>
+        <button class="btn btn-sm" onclick="addLog('Manual log export requested','IT Support')">Export Logs</button>
+      </div>
+      <div class="card pad-l">
+        <div id="logList" style="font-size:12.5px;display:flex;flex-direction:column;gap:0;"></div>
+      </div>
+    </div>
+
+    <!-- Printer Settings -->
+    <div class="page" id="it-printer">
+      <div class="page-head"><div><h2>Printer Settings</h2><p>Configure the wristband label printer</p></div></div>
+      <div class="card pad-l" style="max-width:460px;">
+        <div class="field"><label>Printer Name</label><input value="Ward Nurse Station — Zebra ZD421"></div>
+        <div class="field"><label>IP Address</label><input value="192.168.1.42"></div>
+        <div class="grid-2">
+          <div class="field"><label>Label Size</label><select><option>50mm x 25mm (Wristband)</option><option>40mm x 20mm</option></select></div>
+          <div class="field"><label>Print Density</label><select><option>Standard</option><option>High</option></select></div>
+        </div>
+        <button class="btn btn-primary" onclick="toast('Printer settings saved.','ok')">Save Settings</button>
+        <button class="btn btn-sm" style="margin-left:8px;" onclick="toast('Test label sent to printer.','ok')">Print Test Label</button>
+      </div>
+    </div>
+
+    <!-- Backups -->
+    <div class="page" id="it-backups">
+      <div class="page-head"><div><h2>Backups</h2><p>Database and system backup history</p></div>
+        <button class="btn btn-primary btn-sm" onclick="runBackup()">Run Backup Now</button>
+      </div>
+      <div class="card pad-l">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Date &amp; Time</th><th>Type</th><th>Size</th><th>Status</th></tr></thead>
+          <tbody id="backupList"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal-bg" id="modalAddUser">
+  <div class="modal">
+    <div class="modal-hd"><h3>Add User</h3><button class="icon-btn" onclick="closeModal('modalAddUser')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Full Name</label><input id="usr-name" placeholder="e.g. Nurse Liza Cruz"></div>
+      <div class="field"><label>Role</label><select id="usr-role"><option>Nurse</option><option>Doctor</option><option>Nurse Supervisor</option><option>IT Support</option></select></div>
+      <div class="field"><label>Email</label><input id="usr-email" placeholder="name@veriband.io"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalAddUser')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNewUser()">Add User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Release Patient Modal -->
+<div class="modal-bg" id="modalRelease">
+  <div class="modal">
+    <div class="modal-hd"><h3>Release Patient</h3><button class="icon-btn" onclick="closeModal('modalRelease')">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Releasing <b id="relPatName">—</b>. This deactivates their wristband.</p>
+      <div class="field"><label>Discharge Type</label>
+        <select id="rel-reason"><option>Recovered / Home Care</option><option>Transferred</option><option>Against Medical Advice</option><option>Deceased</option></select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modalRelease')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmRelease()">Confirm Release</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/toast.js"></script>
+<script src="../js/it.js"></script>
+</body>
+</html>

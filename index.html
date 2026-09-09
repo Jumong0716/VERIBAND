@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriBand — Log In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-body">
+
+<div class="proto-badge">PROTOTYPE — sample data only</div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="login-card">
+  <div class="login-logo">
+    <div class="mark">
+      <svg class="ic" style="width:22px;height:22px;stroke:#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></svg>
+    </div>
+    <div class="word">VeriBand</div>
+  </div>
+  <p class="login-tag">Smart Patient Identification &amp; Medication Safety Platform</p>
+
+  <div class="field">
+    <label>Select your role</label>
+    <div class="role-grid" id="roleGrid">
+      <button class="role-opt active" data-role="it" type="button">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M4 20V6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg>
+        Clerk
+      </button>
+      <button class="role-opt" data-role="doctor" type="button">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M9 3v4a3 3 0 0 0 6 0V3"/><path d="M12 12v6"/><path d="M8 21h8"/><circle cx="18" cy="6" r="2.4"/></svg>
+        Doctor
+      </button>
+      <button class="role-opt" data-role="nurse" type="button">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Nurse
+      </button>
+      <button class="role-opt" data-role="supervisor" type="button">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3.5v5c0 4.6-3.2 8.4-8 9.5-4.8-1.1-8-4.9-8-9.5v-5L12 3Z"/></svg>
+        Nurse Supervisor
+      </button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+    <input type="email" id="loginEmail" placeholder="name@example.com" value="itsupport@veriband.io">
+  </div>
+  <div class="field" style="margin-bottom:8px;">
+    <label>Password</label>
+    <input type="password" id="loginPass" placeholder="Enter your password" value="••••••••">
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+    <button class="link-btn" type="button" onclick="toast('Password reset link sent (simulated).','ok')">Forgot password?</button>
+  </div>
+
+  <button class="btn btn-primary btn-block" style="padding:12px;" onclick="doLogin()">Log In</button>
+
+  <div class="login-demo-note">This is a click-through prototype. Any email / password works — pick a role above, then Log In to try that role's app.</div>
+  <p class="login-foot">Secure. Reliable. Safer Care.</p>
+</div>
+
+<script src="js/toast.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

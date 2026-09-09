@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriBand — Nurse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/nurse.css">
+</head>
+<body>
+
+<div class="proto-badge">PROTOTYPE — sample data only</div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="phone-stage">
+  <div class="stage-top">
+    <div class="user-mini"><div class="avatar">NJ</div> Nurse Jane</div>
+    <button class="btn btn-sm" onclick="logout()">Log out</button>
+  </div>
+
+  <div class="phone">
+    <div class="phone-screen">
+      <div class="phone-statusbar"><span>9:41</span><span>●●● VeriBand</span></div>
+
+      <!-- HOME -->
+      <div class="phone-page active" id="nurse-home">
+        <div class="app-header"><div class="ah-row"><div><div class="ah-title">VeriBand</div><div class="ah-sub">Nurse App</div></div></div></div>
+        <div class="phone-body">
+          <p class="home-greeting">Welcome back,</p>
+          <h2 class="home-name" id="homeName">Nurse Jane</h2>
+          <div id="homeSub" class="hint" style="margin:-10px 0 14px;">Ward A · Morning Shift</div>
+
+          <div class="home-stats" id="homeStats"></div>
+          <div id="homeCurrentPatient"></div>
+
+          <h3 style="font-size:13px;margin:0 0 8px;">Quick Actions</h3>
+          <div class="home-actions" id="homeActions"></div>
+        </div>
+        <div class="phone-bottomnav">
+          <button class="bn-item active" onclick="gotoNursePage('nurse-home')"><svg class="ic" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11h-5v-7H9v7Z"/></svg>Home</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-history')"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>History</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-scan')"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Scan</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-alerts')"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-more')"><svg class="ic" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>More</button>
+        </div>
+      </div>
+
+      <!-- SCAN -->
+      <div class="phone-page" id="nurse-scan">
+        <div class="app-header"><div class="ah-row"><div><div class="ah-title">VeriBand</div><div class="ah-sub">Nurse App</div></div><button class="ah-iconbtn" onclick="gotoNursePage('nurse-more')"><svg class="ic" style="stroke:#fff;width:16px;height:16px" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div></div>
+        <div class="phone-body">
+          <h3 style="margin:4px 0 4px;font-size:15px;">Scan Patient Wristband</h3>
+          <p style="font-size:12px;color:var(--muted);margin:0 0 6px;">Align the QR code within the frame</p>
+          <div class="scan-frame" id="scanFrame" onclick="startScan()">
+            <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+            <svg class="ic" style="width:56px;height:56px;color:#c7cede" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM18 19h3v2h-3z"/></svg>
+            <div id="scanLine" class="scan-line hidden"></div>
+            <div id="scanBadge" class="scanning-badge hidden">Scanning…</div>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="startScan()">Tap to Simulate Scan</button>
+          <p style="text-align:center;margin-top:14px;"><button class="link-btn" onclick="gotoNursePage('nurse-more')">Enter Patient ID manually</button></p>
+        </div>
+        <div class="phone-bottomnav">
+          <button class="bn-item" onclick="gotoNursePage('nurse-home')"><svg class="ic" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11h-5v-7H9v7Z"/></svg>Home</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-history')"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>History</button>
+          <button class="bn-item active"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Scan</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-alerts')"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-more')"><svg class="ic" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>More</button>
+        </div>
+      </div>
+
+      <!-- MEDICATION DASHBOARD -->
+      <div class="phone-page" id="nurse-dashboard">
+        <div class="app-header">
+          <div class="ah-row"><div><div class="ah-title" id="nurseDashTitle">Patient Identified</div><div class="ah-sub">Medication Dashboard</div></div>
+          <button class="ah-iconbtn" onclick="gotoNursePage('nurse-scan')"><svg class="ic" style="stroke:#fff;width:16px;height:16px" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></button></div>
+        </div>
+        <div class="phone-body" id="nurseDashBody"></div>
+        <div class="phone-bottomnav">
+          <button class="bn-item active" onclick="gotoNursePage('nurse-home')"><svg class="ic" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11h-5v-7H9v7Z"/></svg>Home</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-history')"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>History</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-scan')"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Scan</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-alerts')"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-more')"><svg class="ic" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>More</button>
+        </div>
+      </div>
+
+      <!-- VERICHECK -->
+      <div class="phone-page" id="nurse-vericheck">
+        <div class="app-header"><div class="back-row"><button onclick="gotoNursePage('nurse-dashboard')"><svg class="ic" style="stroke:#fff" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><div><div class="ah-title">VeriCheck</div><div class="ah-sub">Verify before administration</div></div></div></div>
+        <div class="phone-body">
+          <div class="patient-strip">
+            <div class="av" id="vcAvatar">JD</div>
+            <div><div class="pname" id="vcPname">—</div><div class="psub" id="vcPid">—</div></div>
+          </div>
+          <div class="card pad-m" style="margin-bottom:14px;">
+            <div style="font-weight:800;font-size:13.5px;" id="vcMedName">—</div>
+            <div style="font-size:11.5px;color:var(--muted);" id="vcMedSub">—</div>
+          </div>
+          <div id="vcChecklist"></div>
+          <button class="btn btn-primary btn-block" style="margin-top:16px;" id="vcProceedBtn" disabled onclick="gotoConfirm()">Proceed to Administer</button>
+        </div>
+      </div>
+
+      <!-- CONFIRM ADMINISTRATION -->
+      <div class="phone-page" id="nurse-confirm">
+        <div class="app-header"><div class="back-row"><button onclick="gotoNursePage('nurse-vericheck')"><svg class="ic" style="stroke:#fff" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><div><div class="ah-title">Confirm Administration</div></div></div></div>
+        <div class="phone-body">
+          <div class="card pad-m" style="margin-bottom:16px;">
+            <div style="font-weight:800;font-size:14.5px;" id="cfMedName">—</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="cfMedSub">—</div>
+          </div>
+          <div class="field"><label>Administration Time</label><input type="time" id="cfTime"></div>
+          <div class="field">
+            <label>Outcome</label>
+            <div class="status-select-row" id="cfStatusRow">
+              <button class="status-chip active" data-st="Administered" onclick="pickStatus(this)">Administered</button>
+              <button class="status-chip warn" data-st="Delayed" onclick="pickStatus(this)">Delayed</button>
+              <button class="status-chip warn" data-st="Held" onclick="pickStatus(this)">Held</button>
+              <button class="status-chip bad" data-st="Refused" onclick="pickStatus(this)">Refused</button>
+              <button class="status-chip bad" data-st="Not Administered" onclick="pickStatus(this)">Not Administered</button>
+            </div>
+          </div>
+          <div class="field"><label>Notes (optional)</label><textarea id="cfNotes" placeholder="Enter notes here..."></textarea></div>
+          <button class="btn btn-primary btn-block" onclick="confirmAdminister()">Confirm &amp; Record</button>
+          <button class="btn btn-block" style="margin-top:8px;" onclick="gotoNursePage('nurse-vericheck')">Cancel</button>
+        </div>
+      </div>
+
+      <!-- ADMINISTRATION RECORDED -->
+      <div class="phone-page" id="nurse-recorded">
+        <div class="app-header"><div class="ah-title">Administration Recorded</div></div>
+        <div class="phone-body" style="display:flex;">
+          <div class="success-wrap">
+            <div class="success-check" id="recordedIconWrap"><svg class="ic" style="width:38px;height:38px" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></div>
+            <div>
+              <div style="font-weight:800;font-size:16px;" id="recMedName">—</div>
+              <div style="font-size:12.5px;color:var(--muted);margin-top:3px;" id="recMedSub">—</div>
+            </div>
+            <div style="font-size:12px;color:var(--muted);">
+              Administered at <b id="recTime" style="color:var(--ink);">—</b><br>
+              Recorded by <b style="color:var(--ink);">Nurse Jane</b>
+            </div>
+            <button class="btn btn-primary" onclick="gotoNursePage('nurse-history')">View History</button>
+            <button class="btn" onclick="gotoNursePage('nurse-home')">Back to Home</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+      <div class="phone-page" id="nurse-history">
+        <div class="app-header"><div class="ah-title">Administration History</div><div class="ah-sub" id="histPatientName">All Patients</div></div>
+        <div class="phone-body">
+          <div class="small-tabs" id="histTabs">
+            <button class="active" data-ft="all" onclick="filterHistory('all',this)">All</button>
+            <button data-ft="Administered" onclick="filterHistory('Administered',this)">Administered</button>
+            <button data-ft="exceptions" onclick="filterHistory('exceptions',this)">Exceptions</button>
+          </div>
+          <div id="nurseHistoryList"></div>
+        </div>
+        <div class="phone-bottomnav">
+          <button class="bn-item" onclick="gotoNursePage('nurse-home')"><svg class="ic" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11h-5v-7H9v7Z"/></svg>Home</button>
+          <button class="bn-item active"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>History</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-scan')"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Scan</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-alerts')"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-more')"><svg class="ic" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>More</button>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div class="phone-page" id="nurse-alerts">
+        <div class="app-header"><div class="ah-title">Alerts</div><div class="ah-sub">Medications due soon</div></div>
+        <div class="phone-body" id="nurseAlertsBody"></div>
+        <div class="phone-bottomnav">
+          <button class="bn-item" onclick="gotoNursePage('nurse-home')"><svg class="ic" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11h-5v-7H9v7Z"/></svg>Home</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-history')"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>History</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-scan')"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Scan</button>
+          <button class="bn-item active"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-more')"><svg class="ic" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>More</button>
+        </div>
+      </div>
+
+      <!-- MORE -->
+      <div class="phone-page" id="nurse-more">
+        <div class="app-header"><div class="ah-title">More</div></div>
+        <div class="phone-body">
+          <div class="patient-strip"><div class="av">NJ</div><div><div class="pname">Nurse Jane</div><div class="psub">Ward A · Morning Shift</div></div></div>
+          <div class="field"><label>Enter Patient ID Manually</label>
+            <div style="display:flex;gap:8px;">
+              <input id="manualPid" placeholder="e.g. P-000128" style="flex:1;">
+              <button class="btn btn-primary" onclick="manualLookup()">Go</button>
+            </div>
+          </div>
+          <h3 style="font-size:13px;margin:18px 0 8px;">Recent Patients</h3>
+          <div id="nurseRecentPatients"></div>
+          <button class="btn btn-block" style="margin-top:20px;" onclick="logout()">Log Out</button>
+        </div>
+        <div class="phone-bottomnav">
+          <button class="bn-item" onclick="gotoNursePage('nurse-home')"><svg class="ic" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11h-5v-7H9v7Z"/></svg>Home</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-history')"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>History</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-scan')"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Scan</button>
+          <button class="bn-item" onclick="gotoNursePage('nurse-alerts')"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</button>
+          <button class="bn-item active"><svg class="ic" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>More</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/toast.js"></script>
+<script src="../js/nurse.js"></script>
+</body>
+</html>
