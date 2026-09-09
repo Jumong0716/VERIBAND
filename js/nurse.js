@@ -1,12 +1,36 @@
-/* ==========================================================================
-   VeriBand — Nurse App logic
-   Scan → identify patient → VeriCheck → confirm administration → record.
-   Same functionality as the original prototype, plus a Home landing screen.
-   Depends on: toast.js
-   ========================================================================== */
+/* ============================= toast ============================= */
+function toast(msg, type){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (type || '');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => { el.style.transition='opacity .25s ease'; el.style.opacity='0'; setTimeout(()=>el.remove(),250); }, 2400);
+}
 
+/* ============================= splash + login flow ============================= */
+function goToLogin(){
+  document.getElementById('splash').classList.add('hide');
+  document.getElementById('loginScreen').classList.add('show');
+}
+function attemptLogin(){
+  const user = document.getElementById('loginUser').value.trim();
+  const errEl = document.getElementById('loginError');
+  if(!user){ errEl.textContent = 'Enter your staff ID or email to continue.'; return; }
+  errEl.textContent = '';
+  document.getElementById('loginScreen').classList.remove('show');
+  document.getElementById('appShell').classList.add('show');
+  initNurseApp();
+}
+function logout(){
+  document.getElementById('appShell').classList.remove('show');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginScreen').classList.add('show');
+}
+
+/* ============================= app state ============================= */
 const NURSE = { name: 'Nurse Jane', initials: 'NJ', ward: 'Ward A', shift: 'Morning Shift' };
-
 const state = {
   patients: [
     { id: 'P-000128', name: 'Juan Dela Cruz', gender: 'Male',   age: 45, ward: 'Ward A', room: '12', status: 'Active' },
@@ -20,9 +44,7 @@ const state = {
       { id: 'm2', name: 'Amoxicillin', dose: '500 mg', route: 'Oral', schedule: '8:00 AM · TID',   lastStatus: 'Pending',      lastTime: null },
       { id: 'm3', name: 'Omeprazole',  dose: '20 mg',  route: 'Oral', schedule: '12:00 PM · Daily', lastStatus: 'Pending',      lastTime: null },
     ],
-    'P-000127': [
-      { id: 'm4', name: 'Cefuroxime', dose: '250 mg', route: 'Oral', schedule: '9:00 AM · BID', lastStatus: 'Pending', lastTime: null },
-    ],
+    'P-000127': [ { id: 'm4', name: 'Cefuroxime', dose: '250 mg', route: 'Oral', schedule: '9:00 AM · BID', lastStatus: 'Pending', lastTime: null } ],
     'P-000126': [
       { id: 'm5', name: 'Metformin', dose: '500 mg', route: 'Oral', schedule: '7:00 AM · Daily', lastStatus: 'Pending', lastTime: null },
       { id: 'm6', name: 'Losartan',  dose: '50 mg',  route: 'Oral', schedule: '7:00 AM · Daily', lastStatus: 'Pending', lastTime: null },
@@ -36,30 +58,23 @@ const state = {
   currentMedId: null,
 };
 
-/* ============================= helpers ============================= */
 function initials(name){ return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(); }
 function patientById(id){ return state.patients.find(p => p.id === id); }
 function activePatients(){ return state.patients.filter(p => p.status === 'Active'); }
-function allMeds(){ return Object.values(state.meds).flat(); }
 
-/* ============================= navigation ============================= */
 const NAV_MAP = {
   'nurse-home': 'nurse-home', 'nurse-dashboard': 'nurse-home',
-  'nurse-scan': 'nurse-scan', 'nurse-vericheck': 'nurse-scan', 'nurse-confirm': 'nurse-scan', 'nurse-recorded': 'nurse-scan',
-  'nurse-alerts': 'nurse-alerts',
-  'nurse-history': 'nurse-history',
-  'nurse-more': 'nurse-more',
+  'nurse-scan': 'nurse-scan', 'nurse-vericheck': 'nurse-scan', 'nurse-confirm': 'nurse-scan', 'nurse-recorded': 'nurse-scan', 'nurse-exception': 'nurse-scan',
+  'nurse-alerts': 'nurse-alerts', 'nurse-history': 'nurse-history', 'nurse-more': 'nurse-more',
 };
-
-function toggleSidebar(id){ document.getElementById(id).classList.toggle('open'); }
 
 function gotoNursePage(id){
   document.querySelectorAll('.dash-main > .page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('#nurseSidebar .nav-item').forEach(b => b.classList.remove('active'));
   const navId = NAV_MAP[id] || id;
-  document.querySelector(`#nurseSidebar [data-nv="${navId}"]`)?.classList.add('active');
-  document.getElementById('nurseSidebar').classList.remove('open');
+  document.querySelectorAll('#nurseSidebar .nav-item').forEach(b => b.classList.toggle('active', b.dataset.nv === navId));
+  document.querySelectorAll('#tabbar button').forEach(b => b.classList.toggle('active', b.dataset.nv === navId));
+  window.scrollTo(0,0);
   if(id === 'nurse-home') renderHome();
   if(id === 'nurse-dashboard') renderMedDashboard();
   if(id === 'nurse-history') renderHistory('all');
@@ -77,30 +92,23 @@ function initNurseApp(){
 function renderHome(){
   document.getElementById('homeName').textContent = NURSE.name;
   document.getElementById('homeSub').textContent = NURSE.ward + ' · ' + NURSE.shift;
-
   const pendingDoses = activePatients().reduce((count, p) => count + (state.meds[p.id] || []).filter(m => m.lastStatus === 'Pending').length, 0);
   const givenToday = state.admin_records.filter(r => r.status === 'Administered').length;
-
   document.getElementById('homeStats').innerHTML = `
     <div class="home-stat"><div class="num">${activePatients().length}</div><div class="lbl">My Patients</div></div>
     <div class="home-stat"><div class="num amber">${pendingDoses}</div><div class="lbl">Pending Doses</div></div>
-    <div class="home-stat"><div class="num">${givenToday}</div><div class="lbl">Given Today</div></div>
-  `;
+    <div class="home-stat"><div class="num">${givenToday}</div><div class="lbl">Given Today</div></div>`;
 
   const p = patientById(state.currentPatientId);
-  const currentCardHolder = document.getElementById('homeCurrentPatient');
-  if(p){
-    currentCardHolder.innerHTML = `
+  const holder = document.getElementById('homeCurrentPatient');
+  holder.innerHTML = p ? `
       <div class="current-patient-card">
         <div class="patient-strip" style="box-shadow:none;margin-bottom:10px;">
           <div class="av">${initials(p.name)}</div>
           <div><div class="pname">${p.name}</div><div class="psub">${p.id} · ${p.ward} - Room ${p.room}</div></div>
         </div>
         <button class="btn btn-primary btn-block" onclick="gotoNursePage('nurse-dashboard')">View Medications</button>
-      </div>`;
-  } else {
-    currentCardHolder.innerHTML = '';
-  }
+      </div>` : '';
 
   document.getElementById('homeActions').innerHTML = `
     <button class="home-action" onclick="gotoNursePage('nurse-scan')">
@@ -117,8 +125,7 @@ function renderHome(){
       <div class="ha-ic accent"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></div>
       <div><div class="ha-title">View History</div><div class="ha-sub">Past administration records</div></div>
       <svg class="ic ha-arrow" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
-    </button>
-  `;
+    </button>`;
 }
 
 /* ============================= SCAN ============================= */
@@ -172,8 +179,7 @@ function renderMedDashboard(){
           <div><div class="mname">${m.name} <span style="font-weight:500;color:var(--muted);">${m.dose}</span></div><div class="msub">${m.route} · ${m.schedule}</div></div>
           <div class="mstatus ${m.lastStatus === 'Pending' ? 'pending' : 'done'}">${m.lastStatus === 'Pending' ? 'Pending' : (m.lastStatus + (m.lastTime ? ' · ' + m.lastTime : ''))}</div>
         </div>`).join('') || '<p class="hint">No active medication orders for this patient.</p>'}
-    </div>
-  `;
+    </div>`;
 }
 
 /* ============================= VERICHECK ============================= */
@@ -196,58 +202,113 @@ function openVeriCheck(medId){
 function toggleCheck(btn){
   btn.classList.toggle('on');
   btn.innerHTML = btn.classList.contains('on')
-    ? '<svg class="ic" style="width:12px;height:12px;stroke:#fff" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>'
-    : '';
+    ? '<svg class="ic" style="width:12px;height:12px;stroke:#fff" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>' : '';
   const required = document.querySelectorAll('#vcChecklist .check-row:not(.optional) .chk-circ');
   document.getElementById('vcProceedBtn').disabled = ![...required].every(c => c.classList.contains('on'));
 }
 
 /* ============================= CONFIRM ADMINISTRATION ============================= */
+function parseScheduleTime(schedule){
+  // schedule looks like "8:00 AM · Daily" or "12:00 PM · TID" — pull the leading time
+  const m = schedule.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if(!m) return null;
+  let hh = Number(m[1]) % 12;
+  if(m[3].toUpperCase() === 'PM') hh += 12;
+  return hh * 60 + Number(m[2]);
+}
+function currentMed(){
+  const p = patientById(state.currentPatientId);
+  return (state.meds[p.id] || []).find(m => m.id === state.currentMedId);
+}
+function recalcOutcome(){
+  const med = currentMed();
+  const time = document.getElementById('cfTime').value;
+  if(!med || !time) return;
+  const [h, m] = time.split(':').map(Number);
+  const givenMins = h * 60 + m;
+  const schedMins = parseScheduleTime(med.schedule);
+  const diff = schedMins === null ? 0 : givenMins - schedMins;
+
+  let status, sub, dotClass;
+  if(schedMins === null || Math.abs(diff) <= 30){
+    status = 'Administered'; dotClass = ''; sub = 'Given within the scheduled window';
+  } else {
+    status = 'Delayed'; dotClass = 'amber';
+    const mins = Math.abs(diff);
+    sub = `Given ${mins} min ${diff > 0 ? 'after' : 'before'} the scheduled time`;
+  }
+  document.getElementById('cfStatus').value = status;
+  document.getElementById('cfOutcomeLabel').textContent = status;
+  document.getElementById('cfOutcomeSub').textContent = sub;
+  document.getElementById('cfOutcomeDot').className = 'outcome-dot ' + dotClass;
+}
 function gotoConfirm(){
   const p = patientById(state.currentPatientId);
-  const med = (state.meds[p.id] || []).find(m => m.id === state.currentMedId);
+  const med = currentMed();
   document.getElementById('cfMedName').textContent = med.name + ' ' + med.dose;
   document.getElementById('cfMedSub').textContent = med.route + ' · ' + med.schedule;
   const now = new Date();
   document.getElementById('cfTime').value = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
   document.getElementById('cfNotes').value = '';
-  document.querySelectorAll('#cfStatusRow .status-chip').forEach(c => c.classList.remove('active'));
-  document.querySelector('#cfStatusRow .status-chip[data-st="Administered"]').classList.add('active');
+  recalcOutcome();
   gotoNursePage('nurse-confirm');
-}
-function pickStatus(btn){
-  document.querySelectorAll('#cfStatusRow .status-chip').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
 }
 function confirmAdminister(){
   const p = patientById(state.currentPatientId);
-  const med = (state.meds[p.id] || []).find(m => m.id === state.currentMedId);
-  const status = document.querySelector('#cfStatusRow .status-chip.active').dataset.st;
+  const med = currentMed();
+  const status = document.getElementById('cfStatus').value;
   const time = document.getElementById('cfTime').value;
   const [h, m] = time.split(':');
   let hh = Number(h); const ampm = hh >= 12 ? 'PM' : 'AM'; hh = hh % 12 || 12;
   const timeLabel = `${hh}:${m} ${ampm}`;
   const notes = document.getElementById('cfNotes').value;
-
-  med.lastStatus = status;
-  med.lastTime = timeLabel;
+  med.lastStatus = status; med.lastTime = timeLabel;
   state.admin_records.push({ patientId: p.id, patientName: p.name, med: med.name, dose: med.dose, route: med.route, time: timeLabel, status, notes });
-
   const iconWrap = document.getElementById('recordedIconWrap');
   if(status === 'Administered'){
-    iconWrap.style.background = 'var(--brand-light)';
-    iconWrap.style.color = 'var(--brand-dark)';
-    iconWrap.innerHTML = '<svg class="ic" style="width:38px;height:38px" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>';
+    iconWrap.style.background = 'var(--brand-light)'; iconWrap.style.color = 'var(--brand-dark)';
+    iconWrap.innerHTML = '<svg class="ic" style="width:36px;height:36px" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>';
   } else {
-    iconWrap.style.background = 'var(--amber-light)';
-    iconWrap.style.color = 'var(--amber)';
-    iconWrap.innerHTML = '<svg class="ic" style="width:38px;height:38px" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>';
+    iconWrap.style.background = 'var(--amber-light)'; iconWrap.style.color = 'var(--amber)';
+    iconWrap.innerHTML = '<svg class="ic" style="width:36px;height:36px" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>';
   }
   document.getElementById('recMedName').textContent = med.name + ' ' + med.dose;
   document.getElementById('recMedSub').textContent = med.route + ' · ' + med.schedule + ' · ' + status;
   document.getElementById('recTime').textContent = timeLabel;
   gotoNursePage('nurse-recorded');
   toast(status === 'Administered' ? 'Administration recorded.' : `Marked as ${status}.`, status === 'Administered' ? 'ok' : 'warn');
+}
+
+/* ============================= EXCEPTION (dose not given) ============================= */
+function openExceptionSheet(){
+  document.getElementById('exNotes').value = '';
+  document.querySelectorAll('#exStatusRow .status-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('#exStatusRow .status-chip[data-st="Held"]').classList.add('active');
+  gotoNursePage('nurse-exception');
+}
+function pickExceptionStatus(btn){
+  document.querySelectorAll('#exStatusRow .status-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+}
+function confirmException(){
+  const p = patientById(state.currentPatientId);
+  const med = currentMed();
+  const status = document.querySelector('#exStatusRow .status-chip.active').dataset.st;
+  const now = new Date();
+  let hh = now.getHours(); const mm = String(now.getMinutes()).padStart(2,'0');
+  const ampm = hh >= 12 ? 'PM' : 'AM'; hh = hh % 12 || 12;
+  const timeLabel = `${hh}:${mm} ${ampm}`;
+  const notes = document.getElementById('exNotes').value;
+  med.lastStatus = status; med.lastTime = timeLabel;
+  state.admin_records.push({ patientId: p.id, patientName: p.name, med: med.name, dose: med.dose, route: med.route, time: timeLabel, status, notes });
+  const iconWrap = document.getElementById('recordedIconWrap');
+  iconWrap.style.background = 'var(--red-light)'; iconWrap.style.color = 'var(--red)';
+  iconWrap.innerHTML = '<svg class="ic" style="width:36px;height:36px" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>';
+  document.getElementById('recMedName').textContent = med.name + ' ' + med.dose;
+  document.getElementById('recMedSub').textContent = med.route + ' · ' + med.schedule + ' · ' + status;
+  document.getElementById('recTime').textContent = timeLabel;
+  gotoNursePage('nurse-recorded');
+  toast(`Marked as ${status}.`, 'warn');
 }
 
 /* ============================= HISTORY ============================= */
@@ -294,6 +355,3 @@ function renderRecentPatients(){
       <button class="btn btn-sm" onclick="selectPatientQuick('${p.id}')">Open</button>
     </div>`).join('');
 }
-function logout(){ window.location.href = '../index.html'; }
-
-document.addEventListener('DOMContentLoaded', initNurseApp);  
