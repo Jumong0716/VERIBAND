@@ -95,143 +95,60 @@ function renderLanding(container) {
           </div>
         </div>
 
-        <!-- Right Column: Annotated Functional Wristband Illustration Canvas -->
-        <div class="hero-visual-canvas" aria-label="Physical vinyl wristband product diagram">
-          <!-- Floating Annotation Callout 1 (Top-Right) -->
-          <div class="annotation-pill annotation-top-right">
-            <span>Secure token &mdash; no PHI on band</span>
-          </div>
+        <!-- Right Column: iPhone 15 Pro Splash Screen Preview Showcase -->
+        <div class="hero-visual-canvas hero-visual-device" aria-label="VeriBand mobile app preview on iPhone 15 Pro">
+          <div class="iphone-perspective-stage">
+            <div class="iphone-ambient-backdrop" aria-hidden="true"></div>
 
-          <!-- Floating Annotation Callout 2 (Bottom-Left) -->
-          <div class="annotation-pill annotation-bottom-left">
-            <span>Medical-grade vinyl &mdash; no chip, no battery</span>
-          </div>
+            <div class="iphone-chassis">
+              <!-- Physical Side Buttons -->
+              <span class="iphone-button iphone-btn-action" aria-hidden="true"></span>
+              <span class="iphone-button iphone-btn-vol-up" aria-hidden="true"></span>
+              <span class="iphone-button iphone-btn-vol-down" aria-hidden="true"></span>
+              <span class="iphone-button iphone-btn-power" aria-hidden="true"></span>
 
-          <!-- Floating Annotation Callout 3 (Bottom-Right) -->
-          <div class="annotation-pill annotation-bottom-right">
-            <span>Scan to verify, not to diagnose</span>
-          </div>
+              <!-- Bezel & Active Screen -->
+              <div class="iphone-bezel">
+                <div class="iphone-screen">
+                  <!-- iOS Status Bar -->
+                  <div class="iphone-status-bar" aria-hidden="true">
+                    <span class="iphone-status-time tabular-nums">9:41</span>
+                    <div class="iphone-dynamic-island">
+                      <span class="iphone-sensor"></span>
+                      <span class="iphone-camera"></span>
+                    </div>
+                    <div class="iphone-status-icons">
+                      <svg class="iphone-icon-signal" width="13" height="10" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true">
+                        <rect x="0" y="9" width="2.5" height="3" rx="0.5"/>
+                        <rect x="4.5" y="6" width="2.5" height="6" rx="0.5"/>
+                        <rect x="9" y="3" width="2.5" height="9" rx="0.5"/>
+                        <rect x="13.5" y="0" width="2.5" height="12" rx="0.5"/>
+                      </svg>
+                      <svg class="iphone-icon-wifi" width="12" height="10" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true">
+                        <path d="M8 9.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM3.5 7a6.4 6.4 0 019 0 .8.8 0 001.1-1.1 8 8 0 00-11.2 0A.8.8 0 103.5 7zm-2.8-2.8a10.4 10.4 0 0114.6 0 .8.8 0 101.1-1.1 12 12 0 00-16.8 0A.8.8 0 10.7 4.2z"/>
+                      </svg>
+                      <div class="iphone-icon-battery" aria-hidden="true">
+                        <span class="iphone-battery-fill"></span>
+                      </div>
+                    </div>
+                  </div>
 
-          <!-- Vector Diagram of the VeriBand Physical Wristband with Leader Lines -->
-          <div class="wristband-diagram-wrap">
-            <svg class="wristband-illustration-svg" viewBox="0 0 540 330" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VeriBand medical wristband diagram with structural callouts">
-              <defs>
-                <!-- Subtle Radial Glow around Wristband -->
-                <radialGradient id="wristband-glow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="var(--clerk-tint)" stop-opacity="0.85"/>
-                  <stop offset="100%" stop-color="var(--clerk-tint)" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
+                  <!-- Local Embedded Animated Splash Screen -->
+                  <iframe
+                    src="./splashscreen/splash-screen.html?embed=1"
+                    title="VeriBand animated splash screen"
+                    class="iphone-screen-iframe"
+                    loading="eager"
+                  ></iframe>
 
-              <!-- Ambient Glow Wash -->
-              <ellipse cx="270" cy="165" rx="230" ry="120" fill="url(#wristband-glow)" />
+                  <!-- iOS Home Indicator -->
+                  <div class="iphone-home-indicator" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
 
-              <!-- Leader Lines & Anchor Targets -->
-              <!-- Leader 1: Top-Right Annotation to Token Box -->
-              <path d="M430 38 H310 V126" stroke="var(--clerk-primary)" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
-              <circle cx="310" cy="126" r="4" fill="var(--surface)" stroke="var(--clerk-primary)" stroke-width="2"/>
-
-              <!-- Leader 2: Bottom-Left Annotation to Fastener Clasp -->
-              <path d="M70 286 H44 V182" stroke="var(--clerk-primary)" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
-              <circle cx="44" cy="182" r="4" fill="var(--surface)" stroke="var(--clerk-primary)" stroke-width="2"/>
-
-              <!-- Leader 3: Bottom-Right Annotation to Bedside Verification Zone -->
-              <path d="M430 286 H330 V224" stroke="var(--clerk-primary)" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
-              <circle cx="330" cy="224" r="4" fill="var(--surface)" stroke="var(--clerk-primary)" stroke-width="2"/>
-
-              <!-- Main Wristband Vinyl Strap Body -->
-              <rect x="70" y="76" width="395" height="154" rx="14" fill="var(--surface)" stroke="var(--divider)" stroke-width="2"/>
-              <!-- Subtle Top Bevel Highlight -->
-              <rect x="72" y="78" width="391" height="4" rx="2" fill="var(--clerk-tint)" opacity="0.6"/>
-
-              <!-- Left Fastener Clasp Extension -->
-              <path d="M70 112 H36 C25 112 16 121 16 132 V178 C16 189 25 198 36 198 H70 Z" fill="var(--surface)" stroke="var(--divider)" stroke-width="2"/>
-              <!-- Fastener Snap Rivet Button -->
-              <circle cx="44" cy="155" r="14" fill="var(--clerk-tint)" stroke="var(--clerk-primary)" stroke-width="2"/>
-              <circle cx="44" cy="155" r="5" fill="var(--clerk-primary)"/>
-              <circle cx="44" cy="130" r="2" fill="var(--divider)"/>
-              <circle cx="44" cy="180" r="2" fill="var(--divider)"/>
-
-              <!-- Right Strap Adjustment Tail & Size Notch Holes -->
-              <path d="M465 106 H506 C516 106 524 114 524 124 V186 C524 196 516 204 506 204 H465 Z" fill="var(--surface)" stroke="var(--divider)" stroke-width="2"/>
-              <circle cx="484" cy="130" r="4" fill="var(--bg)" stroke="var(--divider)" stroke-width="1.5"/>
-              <circle cx="484" cy="155" r="4" fill="var(--bg)" stroke="var(--divider)" stroke-width="1.5"/>
-              <circle cx="484" cy="180" r="4" fill="var(--bg)" stroke="var(--divider)" stroke-width="1.5"/>
-              <circle cx="504" cy="142" r="4" fill="var(--bg)" stroke="var(--divider)" stroke-width="1.5"/>
-              <circle cx="504" cy="168" r="4" fill="var(--bg)" stroke="var(--divider)" stroke-width="1.5"/>
-
-              <!-- Top Printed Hospital Header Strip -->
-              <rect x="85" y="88" width="365" height="22" rx="4" fill="var(--clerk-tint)"/>
-              <text x="96" y="103" font-family="'Manrope', sans-serif" font-size="8.5" font-weight="800" fill="var(--clerk-ink)" letter-spacing="0.9">VERIBAND &bull; MEDICAL VINYL &bull; SECURE PATIENT ID &bull; NON-TRANSFERABLE</text>
-
-              <!-- Central QR Code Module Recess -->
-              <rect x="94" y="120" width="86" height="86" rx="8" fill="var(--surface)" stroke="var(--divider)" stroke-width="1.5"/>
-              
-              <!-- QR Finder Patterns -->
-              <!-- Top-Left -->
-              <rect x="102" y="128" width="20" height="20" rx="3" fill="none" stroke="var(--text)" stroke-width="2.5"/>
-              <rect x="107" y="133" width="10" height="10" rx="1.5" fill="var(--text)"/>
-              <!-- Top-Right -->
-              <rect x="152" y="128" width="20" height="20" rx="3" fill="none" stroke="var(--text)" stroke-width="2.5"/>
-              <rect x="157" y="133" width="10" height="10" rx="1.5" fill="var(--text)"/>
-              <!-- Bottom-Left -->
-              <rect x="102" y="178" width="20" height="20" rx="3" fill="none" stroke="var(--text)" stroke-width="2.5"/>
-              <rect x="107" y="183" width="10" height="10" rx="1.5" fill="var(--text)"/>
-
-              <!-- QR Data Matrix Dots -->
-              <rect x="130" y="130" width="5" height="5" fill="var(--text)"/>
-              <rect x="138" y="130" width="5" height="5" fill="var(--text)"/>
-              <rect x="130" y="140" width="5" height="5" fill="var(--text)"/>
-              <rect x="138" y="148" width="5" height="5" fill="var(--text)"/>
-              <rect x="130" y="158" width="5" height="5" fill="var(--text)"/>
-              <rect x="152" y="158" width="5" height="5" fill="var(--text)"/>
-              <rect x="160" y="158" width="5" height="5" fill="var(--text)"/>
-              <rect x="130" y="178" width="5" height="5" fill="var(--text)"/>
-              <rect x="138" y="186" width="5" height="5" fill="var(--text)"/>
-              <rect x="152" y="178" width="5" height="5" fill="var(--text)"/>
-              <rect x="160" y="186" width="5" height="5" fill="var(--text)"/>
-              <rect x="168" y="170" width="5" height="5" fill="var(--text)"/>
-
-              <!-- Patient Token & Information Data Block -->
-              <text x="196" y="132" font-family="'Manrope', sans-serif" font-size="9" font-weight="700" fill="var(--text-muted)" letter-spacing="0.5">PATIENT TOKEN</text>
-              <rect x="196" y="138" width="124" height="26" rx="6" fill="var(--clerk-tint)" stroke="var(--clerk-primary)" stroke-width="1.5"/>
-              <text x="206" y="156" font-family="ui-monospace, monospace" font-size="14" font-weight="800" fill="var(--clerk-primary-deep)">VB-8291</text>
-              <!-- Small Verified Checkmark -->
-              <circle cx="304" cy="151" r="6" fill="var(--clerk-primary)"/>
-              <path d="M301.5 151 L303.5 153 L307 148.5" stroke="var(--surface)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-
-              <!-- Bedside Verification Tag -->
-              <rect x="330" y="138" width="105" height="26" rx="6" fill="var(--bg)" stroke="var(--divider)" stroke-width="1"/>
-              <text x="340" y="155" font-family="'Manrope', sans-serif" font-size="9" font-weight="700" fill="var(--supervisor-primary)">VERICHECK &bull; OK</text>
-
-              <!-- Patient Demographics (Masked for Privacy) -->
-              <text x="196" y="178" font-family="'Manrope', sans-serif" font-size="8.5" font-weight="600" fill="var(--text-muted)">IDENTITY (MASKED):</text>
-              <text x="196" y="191" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="var(--text)">E**** R******</text>
-
-              <text x="330" y="178" font-family="'Manrope', sans-serif" font-size="8.5" font-weight="600" fill="var(--text-muted)">LOCATION:</text>
-              <text x="330" y="191" font-family="'Inter', sans-serif" font-size="10.5" font-weight="600" fill="var(--text)">Ward 3 &bull; Rm 304-A</text>
-
-              <!-- Linear Safety Barcode Strip -->
-              <g opacity="0.6">
-                <rect x="94" y="214" width="2" height="9" fill="var(--text)"/>
-                <rect x="99" y="214" width="3" height="9" fill="var(--text)"/>
-                <rect x="105" y="214" width="1" height="9" fill="var(--text)"/>
-                <rect x="109" y="214" width="4" height="9" fill="var(--text)"/>
-                <rect x="116" y="214" width="2" height="9" fill="var(--text)"/>
-                <rect x="121" y="214" width="1" height="9" fill="var(--text)"/>
-                <rect x="125" y="214" width="3" height="9" fill="var(--text)"/>
-                <rect x="131" y="214" width="2" height="9" fill="var(--text)"/>
-                <rect x="136" y="214" width="4" height="9" fill="var(--text)"/>
-                <rect x="143" y="214" width="1" height="9" fill="var(--text)"/>
-                <rect x="147" y="214" width="2" height="9" fill="var(--text)"/>
-                <rect x="152" y="214" width="3" height="9" fill="var(--text)"/>
-                <rect x="158" y="214" width="2" height="9" fill="var(--text)"/>
-                <rect x="163" y="214" width="1" height="9" fill="var(--text)"/>
-                <rect x="167" y="214" width="4" height="9" fill="var(--text)"/>
-                <rect x="174" y="214" width="2" height="9" fill="var(--text)"/>
-              </g>
-              <text x="196" y="222" font-family="'Inter', sans-serif" font-size="8.5" font-weight="500" fill="var(--text-muted)">Point-of-care verification &bull; zero exposed PHI &bull; tamper-evident clasp</text>
-            </svg>
+            <!-- Ambient Floor Shadow -->
+            <div class="iphone-floor-shadow" aria-hidden="true"></div>
           </div>
         </div>
       </section>

@@ -90,10 +90,11 @@ Reuses the same four-color vocabulary above rather than inventing a fifth palett
 
 ## 3. Typography
 
-Two families, chosen to read as professional software rather than a consumer app — this is the clearest visual difference from Pulse's rounded Nunito.
+Two families for the product itself, chosen to read as professional software rather than a consumer app — this is the clearest visual difference from Pulse's rounded Nunito. One scoped exception below for the landing page only.
 
 - **Headings — Manrope**: weights 600 / 700 / 800. Geometric, confident, no playful rounding.
 - **Body & data — Inter**: weights 400 / 500 / 600. Use **tabular figures** (`font-variant-numeric: tabular-nums`) for anything in a table or log — timestamps and counts must align in a column.
+- **Landing hero accent — Fraunces**, italic, weight 600, 44–56px. Used for exactly one phrase: the accent clause in the hero headline (§5.1-A). Nowhere else in the product — the dashboard, forms, and every other screen stay Manrope/Inter only. This is the one piece of type craft borrowed from the healthtech-marketing reference; self-host it under `/assets/fonts` like the other two, same no-CDN rule.
 
 | Role | Font / weight | Size | Notes |
 |---|---|---|---|
@@ -150,7 +151,38 @@ This is a data-dense dashboard tool, not a soft companion surface — radii and 
 
 **App shell** — persistent left sidebar (icon + label nav), top bar with role badge + facility/ward context. Active nav item uses the current role's `-ink` color and a `-tint` background pill; inactive uses `--text-muted`.
 
-**Landing page** — the one screen that teaches the whole color system in one glance: Manrope hero headline in `--clerk-primary-deep`, one-line value prop, a five-icon strip for VeriID / VeriMed / VeriCheck / VeriLog / VeriSense, then two role-entry cards — **Clerk card in blue, Nurse Supervisor card in green** — each a full CTA (icon, role name, one-line description, button).
+### 5.1 Landing page — detailed spec
+
+Updated after reviewing a consumer healthtech-SaaS landing page as a craft reference. What we borrowed: the mixed serif/sans headline treatment, generous whitespace, a real stat strip, and an elevated card treatment. What we deliberately left out: the decorative glass/floral hero object (a mascot by another name), the doctor/team bio section (VeriBand sells to hospital administrators, not individual doctors — there's no equivalent content to put there), and any performance metric the reference implied ("95% patient satisfaction," "82% diagnosis accuracy") — VeriBand hasn't run a pilot yet, and a landing page for a funding pitch can't claim outcomes it doesn't have.
+
+**A. Hero**
+- Eyebrow pill: "Medication-Safety Layer for Philippine Hospitals" — `--clerk-tint` background, `--clerk-ink` text.
+- Headline, two parts: Fraunces italic accent phrase in `--clerk-primary-deep`, then Manrope 800 continuation in `--text`. Suggested copy: *"Every dose, verified"* — *"from wristband to record."*
+- Subhead: one Inter sentence, paraphrased from the concept note's own positioning — "Connects patient identification, medication verification, and administration documentation into one workflow, without replacing your hospital's HIS or EMR."
+- Dual CTA: primary button "See the demo" (anchors to the role cards in §5.1-D), secondary ghost button "How it works" (anchors to §5.1-C). Role entry itself lives in its own section below — the hero doesn't duplicate it.
+- Visual: a flat vector illustration of the wristband (rounded strip, printed QR module, `--clerk-primary` stroke, white fill) floating on a soft radial wash from `--clerk-tint` to `--bg` — the one place a gradient background is allowed, since it's ambient light, not an illustrated object. 2-3 floating annotation pills with thin leader lines, labeling real facts, not marketing language: "Secure token — no PHI on the band," "Medical-grade vinyl — no chip, no battery," "Scan to verify, not to diagnose."
+
+**B. Stat strip — real numbers only**
+Three cards in the reference's glossy-card treatment (white surface, resting shadow, Manrope 800 number, Inter label), populated with figures already cited in the concept note:
+
+| Stat | Source |
+|---|---|
+| 1,335 accredited Level 1-3 hospitals — the addressable market | PhilHealth, 2026 |
+| 72.41% of surveyed PH nurses report encountering medication administration errors | Del Puerto, 2024 |
+| 1 in 10 patients experience preventable harm in healthcare | WHO, 2023 |
+
+These are framed explicitly as market/problem statistics, never as VeriBand's own performance. If a number can't be traced to a specific concept-note citation, it doesn't go on this page — approximate or invented figures are exactly the kind of thing a judge checks first.
+
+**C. Component strip**
+The five components (VeriID / VeriMed / VeriCheck / VeriLog / VeriSense) as cards instead of flat icons — one larger featured card for VeriSense (it's the differentiator), four standard cards for the rest. Copy pulled directly from the concept note's own component table, not rewritten.
+
+**D. Role entry**
+The existing two CTA cards — Clerk (blue) / Nurse Supervisor (green) — restyled with the reference's card polish: more padding, a subtle top accent bar in the role color, otherwise unchanged from the original spec.
+
+**E. Footer**
+Minimal: wordmark, one line ("A focused medication-safety layer — not a replacement for your HIS or EMR"), nothing else. No social links, no team section.
+
+**Explicitly excluded:** doctor/team bios, testimonials, a numbered onboarding walkthrough, any photo of a real person, any metric VeriBand hasn't earned yet.
 
 **Primary button** — height 44px, radius 8px, role's `-primary-deep` fill, white Manrope 700 label, resting card shadow on hover only (flat by default — this isn't a soft-touch surface).
 

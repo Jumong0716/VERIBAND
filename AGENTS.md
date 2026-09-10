@@ -67,8 +67,8 @@ Follow this structure exactly (from the prototype plan) unless a change is discu
   - Green (`--supervisor-*`) = Nurse Supervisor view only. This is the one deliberate break from blue — don't blend the two roles' colors on the same screen, and don't use green anywhere in the Clerk view or vice versa.
   - Status colors (administered/delayed/withheld/refused/not administered — §2.5 of the design doc) are a **separate** palette from the two role colors. Don't reuse `--clerk-primary` or `--supervisor-primary` for a status pill just because it's convenient.
 - **Contrast pairings are pre-verified — use them as-is.** `veriband_design_system.md` §2.4 lists every text/fill combination that was computed against WCAG and passed. If a new combination is needed, compute it (relative-luminance contrast ratio, 4.5:1 for normal text / 3:1 for large text or icon-on-chip) before using it — don't guess.
-- **No mascot, no illustrated companion character.** This product doesn't have one; don't add one.
-- **Typography**: Manrope for headings, Inter for body/data, tabular figures (`font-variant-numeric: tabular-nums`) on every numeric table/log column. No third font family.
+- **No mascot, no illustrated companion character.** This product doesn't have one; don't add one. The landing hero's wristband illustration (design doc §5.1-A) is not an exception to this — it's a flat, functional diagram of the actual product with factual annotation labels, not a decorative or characterized object. If it starts looking like art rather than a diagram, it's gone too far.
+- **Typography**: Manrope for headings, Inter for body/data, tabular figures (`font-variant-numeric: tabular-nums`) on every numeric table/log column. One scoped exception: Fraunces italic for the landing hero's accent phrase only (design doc §3, §5.1-A) — nowhere else in the app.
 
 ---
 

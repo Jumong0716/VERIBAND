@@ -140,4 +140,28 @@
   --table-row-min-height: 44px;
   --grid-gutter: 24px;
   --max-content-width: 1280px;
+
+  /* ==========================================================================
+     5 Mobile Device Frame Tokens (iPhone 15 Pro Mockup)
+     ========================================================================== */
+  --device-chassis: #1E242C;
+  --device-chassis-border: #3B4452;
+  --device-chassis-shine: #525D6E;
+  --device-bezel: #0A0D12;
+  --device-island: #000000;
+  --device-screen-bg: #F7FBFF;
+  --device-button: #2A323D;
+  --device-home-bar: #A0AEC0;
+  --device-glare: rgba(255, 255, 255, 0.08);
+  --device-ambient-glow: rgba(31, 111, 178, 0.14);
+  --device-floor-shadow: rgba(15, 35, 60, 0.20);
+
+  --radius-device: 48px;
+  --radius-device-screen: 38px;
+  --radius-dynamic-island: 16px;
+  --radius-device-button: 3px;
+  --radius-micro: 2px;
+
+  --shadow-device: 0 28px 64px -12px rgba(15, 35, 60, 0.28), 0 12px 24px -6px rgba(15, 35, 60, 0.16);
+  --shadow-device-float: 0 36px 72px -16px rgba(15, 35, 60, 0.32), 0 16px 32px -8px rgba(15, 35, 60, 0.18);
 }
