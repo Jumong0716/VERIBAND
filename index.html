@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VeriBand — Digital Patient-ID and Medication-Safety Platform for Healthcare Facilities.">
+  <title>VeriBand — Digital Patient-ID & Medication-Safety Platform</title>
+
+  <!-- Design tokens & Application styles -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top-level View Containers (Router toggles active view) -->
+    
+    <!-- 1. Landing View -->
+    <section id="view-landing" class="view" aria-label="Landing Page">
+      <!-- Populated dynamically by main.js / router -->
+    </section>
+
+    <!-- 2. Clerk View -->
+    <section id="view-clerk" class="view" aria-label="Clerk View">
+      <!-- Populated dynamically by clerk-view.js / router -->
+    </section>
+
+    <!-- 3. Nurse Supervisor View -->
+    <section id="view-supervisor" class="view" aria-label="Nurse Supervisor View">
+      <!-- Populated dynamically by supervisor-view.js / router -->
+    </section>
+
+    <!-- 4. Bedside Nurse View -->
+    <section id="view-nurse" class="view" aria-label="Bedside Nurse View">
+      <!-- Populated dynamically by nurse-view.js / router -->
+    </section>
+
+    <!-- 5. Doctor View -->
+    <section id="view-doctor" class="view" aria-label="Doctor View">
+      <!-- Populated dynamically by doctor-view.js / router -->
+    </section>
+  </div>
+
+  <!-- Persistent Corner Reset / Reseed Control (AGENTS.md & Task 3) -->
+  <button id="btn-reseed-corner" class="corner-reseed-btn" type="button" aria-label="Reset and reseed demo data">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+      <path d="M3 3v5h5"/>
+    </svg>
+    <span>Reset / Reseed Data</span>
+  </button>
+
+  <div id="reseed-toast" class="toast-notification" role="status" aria-live="polite">
+    State reset to fresh seed dataset
+  </div>
+
+  <!-- Vendored QR Code Library (Offline, zero CDN) -->
+  <script src="vendor/qrcode.min.js"></script>
+
+  <!-- Application Entry Point -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

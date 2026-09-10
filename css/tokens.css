@@ -1,0 +1,143 @@
+/* VeriBand Design Tokens — tokens.css */
+/* Source of truth: veriband_design_system.md */
+/* No selectors allowed in this file other than :root. */
+
+:root {
+  /* ==========================================================================
+     2.1 Neutral base (shared across both roles)
+     ========================================================================== */
+  --bg: #F4F7FA;
+  --surface: #FFFFFF;
+  --text: #1B2733;
+  --text-body: #445264;
+  --text-muted: #6B7686;
+  --text-faint: #7F8A96;
+  --divider: #E2E8EE;
+
+  /* ==========================================================================
+     2.2 Brand / Clerk role — Blue
+     ========================================================================== */
+  --clerk-primary: #1F6FB2;
+  --clerk-primary-deep: #175A91;
+  --clerk-ink: #175A91;
+  --clerk-tint: #E7F1FA;
+
+  /* ==========================================================================
+     2.3 Nurse Supervisor role — now unified to Clerk Blue
+     ========================================================================== */
+  --supervisor-primary: #1F6FB2;
+  --supervisor-primary-deep: #175A91;
+  --supervisor-ink: #175A91;
+  --supervisor-tint: #E7F1FA;
+
+  /* ==========================================================================
+     2.4 Bedside Nurse role — now unified to Clerk Blue
+     ========================================================================== */
+  --nurse-primary: #1F6FB2;
+  --nurse-primary-deep: #175A91;
+  --nurse-ink: #175A91;
+  --nurse-tint: #E7F1FA;
+
+  /* ==========================================================================
+     2.4b Doctor role — unified to Clerk Blue
+     ========================================================================== */
+  --doctor-primary: #1F6FB2;
+  --doctor-primary-deep: #175A91;
+  --doctor-ink: #175A91;
+  --doctor-tint: #E7F1FA;
+
+  /* ==========================================================================
+     2.5 Semantic status — medication administration outcomes
+     ========================================================================== */
+  /* Administered / on-time (shares supervisor-primary-deep & tint) */
+  --status-administered-solid: #226E56;
+  --status-administered-tint: #E7F5EF;
+  --status-administered-text: #1E6E54;
+
+  /* Delayed */
+  --status-delayed-solid: #B98325;
+  --status-delayed-tint: #FBF1DC;
+  --status-delayed-text: #8A5D08;
+
+  /* Withheld / Refused */
+  --status-withheld-solid: #CB5936;
+  --status-withheld-tint: #FBE9E2;
+  --status-withheld-text: #B04425;
+
+  /* Not administered */
+  --status-not-administered-solid: #5B6672;
+  --status-not-administered-tint: #ECEFF2;
+  --status-not-administered-text: #5B6672;
+
+  /* ==========================================================================
+     2.6 VeriSense severity (dashboard insight panel)
+     ========================================================================== */
+  --severity-info: #5B6672;
+  --severity-info-tint: #ECEFF2;
+  --severity-caution: #B98325;
+  --severity-caution-tint: #FBF1DC;
+  --severity-review: #CB5936;
+  --severity-review-tint: #FBE9E2;
+
+  /* Form & UI Controls */
+  --toggle-off: #D8DEE4;
+
+  /* ==========================================================================
+     3 Typography
+     ========================================================================== */
+  --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-serif-accent: 'Fraunces', Georgia, 'Playfair Display', 'Times New Roman', serif;
+
+  /* Type scale */
+  --text-wordmark-size: 28px;
+  --text-wordmark-weight: 800;
+
+  --text-page-title-size: 22px;
+  --text-page-title-weight: 700;
+
+  --text-card-title-size: 16px;
+  --text-card-title-weight: 700;
+
+  --text-eyebrow-size: 11px;
+  --text-eyebrow-weight: 600;
+
+  --text-body-size: 14px;
+  --text-body-line-height: 1.5;
+
+  --text-table-size: 13px;
+  --text-meta-size: 12px;
+  --text-status-size: 12px;
+  --text-nav-size: 13px;
+  --text-button-size: 14px;
+
+  --text-stat-number-size: 32px;
+  --text-stat-number-weight: 800;
+
+  /* ==========================================================================
+     4 Shape, Elevation & Spacing
+     ========================================================================== */
+  /* Radii */
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-chip: 8px;
+  --radius-modal: 16px;
+  --radius-pill: 999px;
+  --radius-table-row: 0px;
+
+  /* Shadows (subtle, cool-gray) */
+  --shadow-card-resting: 0 1px 3px rgba(27, 39, 51, 0.08), 0 1px 2px rgba(27, 39, 51, 0.06);
+  --shadow-card-hover: 0 4px 12px rgba(27, 39, 51, 0.10);
+  --shadow-verisense-alert: 0 6px 18px rgba(27, 39, 51, 0.14);
+  --shadow-header: 0 1px 0 rgba(27, 39, 51, 0.06);
+
+  /* Spacing & Layout */
+  --page-padding-desktop: 32px;
+  --page-padding-tablet: 20px;
+  --card-padding: 20px;
+  --table-row-min-height: 44px;
+  --grid-gutter: 24px;
+  --max-content-width: 1280px;
+}
